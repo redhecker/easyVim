@@ -1,7 +1,7 @@
-#ifndef TEMP_CONFIG_HPP
-#define TEMP_CONFIG_HPP
+#ifndef EV_CONFIG_HPP
+#define EV_CONFIG_HPP
 
-#define TEMP_VERSION "0.1.0"
+#define EV_VERSION "1.0.0"
 
 #include <iostream>
 #include "calc/a/calculate.hpp"
