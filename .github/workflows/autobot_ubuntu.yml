@@ -1,0 +1,75 @@
+name: build and test bot - ubuntu
+on: [pull_request]
+jobs:
+  ubuntu_22_04:
+    name: Test-Ubuntu22.04
+    timeout-minutes: 10
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@main
+    - name : install submodule dependencies
+      run: git submodule update --init --recursive
+    - name : install dependencies fmt
+      run: sudo apt install libfmt-dev
+    - name: build
+      run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && make -j4
+    # - name: debug
+    #   run: pwd && ls
+    - name: test
+      # run: make test
+      run: cd build/tests && ./tests
+
+  # i think ubuntu 20.04 is not supported (i don't know why)
+  # ubuntu_20_04:
+  #   name: Test-Ubuntu20.04
+  #   timeout-minutes: 10
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #   - uses: actions/checkout@main
+  #   - name : install submodule dependencies
+  #     run: git submodule update --init --recursive
+  #   - name : install dependencies fmt
+  #     run: sudo apt install libfmt-dev
+  #   - name: build
+  #     run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && make -j4
+  #   # - name: debug
+  #   #   run: pwd && ls
+  #   - name: test
+  #     # run: make test
+  #     run: cd build/tests && ./tests
+
+  ubuntu_24_04:
+    name: Test-Ubuntu24.04
+    timeout-minutes: 10
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@main
+    - name : install submodule dependencies
+      run: git submodule update --init --recursive
+    - name : install dependencies fmt
+      run: sudo apt install libfmt-dev
+    - name: build
+      run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && make -j4
+    # - name: debug
+    #   run: pwd && ls
+    - name: test
+      # run: make test
+      run: cd build/tests && ./tests
+
+  ubuntu_latest:
+    name: Test-Ubuntu_Latest
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - name : install submodule dependencies
+      run: git submodule update --init --recursive
+    - name : install dependencies fmt
+      run: sudo apt install libfmt-dev
+    - name: build
+      run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && make -j4
+    # - name: debug
+    #   run: pwd && ls
+    - name: test
+      # run: make test
+      run: cd build/tests && ./tests

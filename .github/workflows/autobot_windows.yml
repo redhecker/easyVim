@@ -1,0 +1,65 @@
+name: GitHub Actions Test - windows
+on: [pull_request]
+jobs:
+  test:
+    name: Test-windows
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: Hello World
+      run: echo "Hello World"
+
+# name: build and test bot - windows
+# on: [pull_request]
+
+# jobs:
+#   windows_2019:
+#     name: Test-Windows2019
+#     timeout-minutes: 10
+#     runs-on: windows-2019
+#     steps:
+#     - uses: actions/checkout@main
+#     - name : install submodule dependencies
+#       run: git submodule update --init --recursive
+#     - name : install dependencies fmt
+#       run: npm install fmt
+#     - name: build
+#       run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && cmake --build . --config Release
+#     # - name: debug
+#     #   run: dir
+#     - name: test
+#       run: cd build/tests && tests.exe
+
+#   windows_2022:
+#     name: Test-Windows2022
+#     timeout-minutes: 10
+#     runs-on: windows-2022
+#     steps:
+#     - uses: actions/checkout@main
+#     - name : install submodule dependencies
+#       run: git submodule update --init --recursive
+#     # - name : install dependencies fmt
+#     #   run: choco install fmt
+#     - name: build
+#       run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && cmake --build . --config Release
+#     # - name: debug
+#     #   run: dir
+#     - name: test
+#       run: cd build/tests && tests.exe
+
+#   windows_latest:
+#     name: Test-Windows_Latest
+#     timeout-minutes: 10
+#     runs-on: windows-latest
+#     steps:
+#     - uses: actions/checkout@main
+#     - name : install submodule dependencies
+#       run: git submodule update --init --recursive
+#     # - name : install dependencies fmt
+#     #   run: choco install fmt
+#     - name: build
+#       run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && cmake --build . --config Release
+#     # - name: debug
+#     #   run: dir
+#     - name: test
+#       run: cd build/tests && tests.exe
