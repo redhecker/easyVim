@@ -9,8 +9,8 @@ jobs:
     - uses: actions/checkout@main
     - name : install submodule dependencies
       run: git submodule update --init --recursive
-    - name : install dependencies fmt
-      run: sudo apt install libfmt-dev
+    - name : install dependencies NCURSES
+      run: sudo apt install libncurses5-dev
     - name: build
       run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && make -j4
     # - name: debug
@@ -46,8 +46,8 @@ jobs:
     - uses: actions/checkout@main
     - name : install submodule dependencies
       run: git submodule update --init --recursive
-    - name : install dependencies fmt
-      run: sudo apt install libfmt-dev
+    - name : install dependencies NCURSES
+      run: sudo apt install libncurses5-dev
     - name: build
       run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && make -j4
     # - name: debug
@@ -64,8 +64,8 @@ jobs:
     - uses: actions/checkout@main
     - name : install submodule dependencies
       run: git submodule update --init --recursive
-    - name : install dependencies fmt
-      run: sudo apt install libfmt-dev
+    - name : install dependencies NCURSES
+      run: sudo apt install libncurses5-dev
     - name: build
       run: mkdir build && cd build && cmake .. -DTEST_OPTION=ON && make -j4
     # - name: debug

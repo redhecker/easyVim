@@ -1,4 +1,3 @@
-#define FMT_HEADER_ONLY 
 #include <ncurses.h>
 #include "../include.hpp"
 
