@@ -3,5 +3,9 @@
 #include <iostream>
 
 void version(){
-    std::cout << "current version: " << TEMP_VERSION << std::endl;
+    std::cout << "easyVim version: " << EV_VERSION << std::endl;
+}
+
+const char* getVersion(){
+    return EV_VERSION;
 }

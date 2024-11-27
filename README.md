@@ -23,15 +23,25 @@ a simple vim-like text editor
 
 1. 下载相关依赖
 
-    本项目强依赖于`ncurses`库，因此需要下载依赖：
+    `easyVim`强依赖于`ncurses`库，因此需要下载依赖：
     ```shell
     sudo apt install libfmt-dev
     ```
 
 2. 编译
-
+   在当前文件夹下运行如下指令：
+    ```shell
+    mkdir build && cd build 
+    cmake .. -DTEST_OPTION=OFF 
+    make -j4
+    ```
 
 3. 运行
+   在当前文件夹下运行如下指令：
+    ```shell
+    cd build/bin
+    ./main
+    ```
 
 
 
