@@ -1,29 +1,54 @@
-#include <ncurses.h>
-#include "../include.hpp"
-
 /**@mainpage  easyVim
 * <table>
 * <tr><th>Project  <td>easyVim
 * <tr><th>Author   <td>Super github@redhecker
 * </table>
-* @section   项目详细描述
-* 这个项目是这样的 。。。
+* @section   项目描述
+* easyVim 是一款类似vim的文本编辑器。
 *
 * @section   项目功能描述
-* 它的功能是。。。
+* easyVim功能描述。
 * 
 * @section   用法描述 
-* 可以这样那样用、
+* 可以这样那样用。
 * 
 * @copyright   Copyright (c) 2024
-***************************************************
+*************************************************
 */
- int main()
- {
-    initscr(); /*初始化，进入NCURSES模式*/
-    printw("version %s", getVersion()); /*在虚拟屏幕上打印Hello,World!!! */
-    refresh(); /*将虚拟屏幕上的内容写到显示器上，并刷新*/
-    getchar(); /*等待用户输入*/
-    endwin(); /*退出NCURSES模式*/
+
+#include "show.hpp"
+#include "config.hpp"
+#include "../include.hpp"
+int main(){
+    ev::window window;
+    window.init();
+    int ch;
+    bool exit = false;
+    while (!exit) {
+        ch = window.getInput();
+
+        switch (ch){
+            case EV_Esc:
+                exit = true;
+                break;
+            case EV_UP:
+                window.moveUp();
+                break;
+            case EV_DOWN:
+                window.moveDown();
+                break;
+            case EV_LEFT:
+                window.moveLeft();
+                break;
+            case EV_RIGHT:
+                window.moveRight();
+                break;
+            default:
+                printw("%d ", ch);
+                break;
+        }
+    }
+    window.quit();
+
     return 0;
- }
+}
