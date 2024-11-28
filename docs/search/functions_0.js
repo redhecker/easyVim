@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['add_9',['add',['../a_2calculate_8hpp.html#aa99823a0fc8313c9c32541ce768fb801',1,'calculate.cpp']]]
+  ['flushline_38',['flushLine',['../classev_1_1window.html#a50ca0842b2a067541a6c15342a48f8de',1,'ev::window']]],
+  ['flushscreen_39',['flushScreen',['../classev_1_1window.html#a34bab1e79103bec8e7ff7a7ef8cb5505',1,'ev::window']]]
 ];
