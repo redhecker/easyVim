@@ -19,9 +19,13 @@
 #include "show.hpp"
 #include "config.hpp"
 #include "../include.hpp"
+#include <iostream>
 int main(){
     ev::window window;
+    ev::EVFile file("test.txt");
+    file.loadFile();
     window.init();
+    window.flushScreen(file.fileContent, 0, 0);
     int ch;
     bool exit = false;
     while (!exit) {
@@ -49,6 +53,8 @@ int main(){
         }
     }
     window.quit();
+    file.fileContent.push_back("hello world");
+    file.saveFile();
 
     return 0;
 }

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>easyVim: ev::evFile Class Reference</title>
+<title>easyVim: ev::EVFile Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,96 +63,103 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>ev</b></li><li class="navelem"><a class="el" href="classev_1_1evFile.html">evFile</a></li>  </ul>
+<li class="navelem"><b>ev</b></li><li class="navelem"><a class="el" href="classev_1_1EVFile.html">EVFile</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classev_1_1evFile-members.html">List of all members</a>  </div>
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classev_1_1EVFile-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">ev::evFile Class Reference</div>  </div>
+<div class="title">ev::EVFile Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>easyVim 基础文件类  
- <a href="classev_1_1evFile.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="core_8hpp_source.html">core.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a34484ce8e02fe2414ba60609e762b7c0"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0">evFileStatus</a> { <br />
-&#160;&#160;<a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0ae0aa021e21dddbd6d8cecec71e9cf564">OK</a>
-, <a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0a306a50a2d569de3414fdae01e87fb77c">NOT_EXIST</a>
-, <a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0ab388262bfaae9b138a75d32c3f200156">OPEN_FAIL</a>
-, <a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0a6c7ae20a94314757bdd4d696a7f13e27">READ_FAIL</a>
+<tr class="memitem:a0e5e033a0cc753482f564e5405dfa5fe"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fe">EVFileStatus</a> { <br />
+&#160;&#160;<a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fead5e45ffd60cdb54c0560d25463437e00">EVFILE_OK</a> = 0
+, <a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fea1070cf7fe7748ceb0403a974a21edb28">EVFILE_NOT_EXIST</a> = 1
+, <a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fea5a4deffea3fffa8a7bd94bcf4c6adc84">EVFILE_OPEN_FAIL</a> = 2
+, <a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fea43d8c284d6f0c16ce3d187233979d294">EVFILE_READ_FAIL</a> = 3
 , <br />
-&#160;&#160;<a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0a8b93a93b22b157589628891b6d5ea986">WRITE_FAIL</a>
-, <a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0acb76b2714675ebd61895683984014881">CLOSE_FAIL</a>
+&#160;&#160;<a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fea523ec9cf6e9c2bd22aed835b25e11b2c">EVFILE_WRITE_FAIL</a> = 4
+, <a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5feafd91148a8cd2c1329377c085f543d438">EVFILE_CLOSE_FAIL</a> = 5
 <br />
  }</td></tr>
-<tr class="separator:a34484ce8e02fe2414ba60609e762b7c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a0e5e033a0cc753482f564e5405dfa5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac9869e1babb2639f9b7f3adcfc472eb0"><td class="memItemLeft" align="right" valign="top"><a id="ac9869e1babb2639f9b7f3adcfc472eb0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>evFile</b> (const std::string &amp;fileName)</td></tr>
-<tr class="separator:ac9869e1babb2639f9b7f3adcfc472eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad373030e495542108ecfb341d83a239f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0">evFileStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1evFile.html#ad373030e495542108ecfb341d83a239f">loadFile</a> ()</td></tr>
-<tr class="memdesc:ad373030e495542108ecfb341d83a239f"><td class="mdescLeft">&#160;</td><td class="mdescRight">读取文件  <a href="classev_1_1evFile.html#ad373030e495542108ecfb341d83a239f">More...</a><br /></td></tr>
-<tr class="separator:ad373030e495542108ecfb341d83a239f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f93a38e2c645c4a10122ce911fb4ab0"><td class="memItemLeft" align="right" valign="top"><a id="a8f93a38e2c645c4a10122ce911fb4ab0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>EVFile</b> (const std::string <a class="el" href="classev_1_1EVFile.html#abc3dba57695bd2561c4f1ab05ad95b55">fileName</a>)</td></tr>
+<tr class="separator:a8f93a38e2c645c4a10122ce911fb4ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b5b5214eb6df55a429ca8ecf99e6515"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fe">EVFileStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1EVFile.html#a4b5b5214eb6df55a429ca8ecf99e6515">loadFile</a> ()</td></tr>
+<tr class="memdesc:a4b5b5214eb6df55a429ca8ecf99e6515"><td class="mdescLeft">&#160;</td><td class="mdescRight">读取文件  <a href="classev_1_1EVFile.html#a4b5b5214eb6df55a429ca8ecf99e6515">More...</a><br /></td></tr>
+<tr class="separator:a4b5b5214eb6df55a429ca8ecf99e6515"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f193d9f5d4d14f56d3065cf990da51e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fe">EVFileStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1EVFile.html#a6f193d9f5d4d14f56d3065cf990da51e">saveFile</a> ()</td></tr>
+<tr class="memdesc:a6f193d9f5d4d14f56d3065cf990da51e"><td class="mdescLeft">&#160;</td><td class="mdescRight">写入文件  <a href="classev_1_1EVFile.html#a6f193d9f5d4d14f56d3065cf990da51e">More...</a><br /></td></tr>
+<tr class="separator:a6f193d9f5d4d14f56d3065cf990da51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:abc3dba57695bd2561c4f1ab05ad95b55"><td class="memItemLeft" align="right" valign="top"><a id="abc3dba57695bd2561c4f1ab05ad95b55"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1EVFile.html#abc3dba57695bd2561c4f1ab05ad95b55">fileName</a></td></tr>
+<tr class="memdesc:abc3dba57695bd2561c4f1ab05ad95b55"><td class="mdescLeft">&#160;</td><td class="mdescRight">文件名 <br /></td></tr>
+<tr class="separator:abc3dba57695bd2561c4f1ab05ad95b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af892ce7a90aca6e9eafe358c66ee2f9f"><td class="memItemLeft" align="right" valign="top"><a id="af892ce7a90aca6e9eafe358c66ee2f9f"></a>
+std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1EVFile.html#af892ce7a90aca6e9eafe358c66ee2f9f">fileContent</a></td></tr>
+<tr class="memdesc:af892ce7a90aca6e9eafe358c66ee2f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">文件内容 <br /></td></tr>
+<tr class="separator:af892ce7a90aca6e9eafe358c66ee2f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75e7c2b3f5b41e3b3805df7bd9778635"><td class="memItemLeft" align="right" valign="top"><a id="a75e7c2b3f5b41e3b3805df7bd9778635"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1EVFile.html#a75e7c2b3f5b41e3b3805df7bd9778635">start</a></td></tr>
+<tr class="memdesc:a75e7c2b3f5b41e3b3805df7bd9778635"><td class="mdescLeft">&#160;</td><td class="mdescRight">文件起始行号（由于文件可能很大，不能一次性把所有文件内容都load进来） <br /></td></tr>
+<tr class="separator:a75e7c2b3f5b41e3b3805df7bd9778635"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b89298479ec152a9781a65d3cfc6bdd"><td class="memItemLeft" align="right" valign="top"><a id="a6b89298479ec152a9781a65d3cfc6bdd"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classev_1_1EVFile.html#a6b89298479ec152a9781a65d3cfc6bdd">offset</a></td></tr>
+<tr class="memdesc:a6b89298479ec152a9781a65d3cfc6bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">文件偏移量（由于文件可能很大，不能一次性把所有文件内容都load进来） <br /></td></tr>
+<tr class="separator:a6b89298479ec152a9781a65d3cfc6bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>easyVim 基础文件类 </p>
-<p>用于存储文件内容，提供文件操作接口 </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="a34484ce8e02fe2414ba60609e762b7c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34484ce8e02fe2414ba60609e762b7c0">&#9670;&nbsp;</a></span>evFileStatus</h2>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a0e5e033a0cc753482f564e5405dfa5fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e5e033a0cc753482f564e5405dfa5fe">&#9670;&nbsp;</a></span>EVFileStatus</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0">ev::evFile::evFileStatus</a></td>
+          <td class="memname">enum <a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fe">ev::EVFile::EVFileStatus</a></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a34484ce8e02fe2414ba60609e762b7c0ae0aa021e21dddbd6d8cecec71e9cf564"></a>OK&#160;</td><td class="fielddoc"><p>文件正常 </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0e5e033a0cc753482f564e5405dfa5fead5e45ffd60cdb54c0560d25463437e00"></a>EVFILE_OK&#160;</td><td class="fielddoc"><p>文件正常 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a34484ce8e02fe2414ba60609e762b7c0a306a50a2d569de3414fdae01e87fb77c"></a>NOT_EXIST&#160;</td><td class="fielddoc"><p>文件不存在 </p>
+<tr><td class="fieldname"><a id="a0e5e033a0cc753482f564e5405dfa5fea1070cf7fe7748ceb0403a974a21edb28"></a>EVFILE_NOT_EXIST&#160;</td><td class="fielddoc"><p>文件不存在 -&gt; 创建文件 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a34484ce8e02fe2414ba60609e762b7c0ab388262bfaae9b138a75d32c3f200156"></a>OPEN_FAIL&#160;</td><td class="fielddoc"><p>文件打开失败 </p>
+<tr><td class="fieldname"><a id="a0e5e033a0cc753482f564e5405dfa5fea5a4deffea3fffa8a7bd94bcf4c6adc84"></a>EVFILE_OPEN_FAIL&#160;</td><td class="fielddoc"><p>文件打开失败 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a34484ce8e02fe2414ba60609e762b7c0a6c7ae20a94314757bdd4d696a7f13e27"></a>READ_FAIL&#160;</td><td class="fielddoc"><p>文件读取失败 </p>
+<tr><td class="fieldname"><a id="a0e5e033a0cc753482f564e5405dfa5fea43d8c284d6f0c16ce3d187233979d294"></a>EVFILE_READ_FAIL&#160;</td><td class="fielddoc"><p>文件读取失败 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a34484ce8e02fe2414ba60609e762b7c0a8b93a93b22b157589628891b6d5ea986"></a>WRITE_FAIL&#160;</td><td class="fielddoc"><p>文件写入失败 </p>
+<tr><td class="fieldname"><a id="a0e5e033a0cc753482f564e5405dfa5fea523ec9cf6e9c2bd22aed835b25e11b2c"></a>EVFILE_WRITE_FAIL&#160;</td><td class="fielddoc"><p>文件写入失败 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a34484ce8e02fe2414ba60609e762b7c0acb76b2714675ebd61895683984014881"></a>CLOSE_FAIL&#160;</td><td class="fielddoc"><p>文件关闭失败 </p>
+<tr><td class="fieldname"><a id="a0e5e033a0cc753482f564e5405dfa5feafd91148a8cd2c1329377c085f543d438"></a>EVFILE_CLOSE_FAIL&#160;</td><td class="fielddoc"><p>文件关闭失败 </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ad373030e495542108ecfb341d83a239f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad373030e495542108ecfb341d83a239f">&#9670;&nbsp;</a></span>loadFile()</h2>
+<a id="a4b5b5214eb6df55a429ca8ecf99e6515"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b5b5214eb6df55a429ca8ecf99e6515">&#9670;&nbsp;</a></span>loadFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classev_1_1evFile.html#a34484ce8e02fe2414ba60609e762b7c0">evFileStatus</a> ev::evFile::loadFile </td>
+          <td class="memname"><a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fe">EVFile::EVFileStatus</a> ev::EVFile::loadFile </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -165,8 +172,29 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<a id="a6f193d9f5d4d14f56d3065cf990da51e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f193d9f5d4d14f56d3065cf990da51e">&#9670;&nbsp;</a></span>saveFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classev_1_1EVFile.html#a0e5e033a0cc753482f564e5405dfa5fe">EVFile::EVFileStatus</a> ev::EVFile::saveFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>写入文件 </p>
+<dl class="section return"><dt>Returns</dt><dd>evFileStatus 文件状态 </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/modules/core/<a class="el" href="core_8hpp_source.html">core.hpp</a></li>
+<li>src/modules/core/loadsave.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

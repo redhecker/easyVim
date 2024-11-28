@@ -9,6 +9,10 @@
 
 #define EV_VERSION "1.0.0"
 
+#include "core/core.hpp"
+#include "encrypt/encrypt.hpp"
+#include "instructions/inst.hpp"
+
 
 #define EV_F(n) n+264
 #define EV_Esc 27
