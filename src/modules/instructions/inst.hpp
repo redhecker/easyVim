@@ -1,5 +1,5 @@
 /**@file       inst.hpp
-* @brief       easyVim指令模块头文件
+* @brief       easyVim指令模块
 * @details     定义了指令模块的相关函数和类
 * @author      Super@redhecker
 * @copyright   Copyright (c) 2024

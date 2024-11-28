@@ -1,5 +1,5 @@
 /**@file       core.hpp
-* @brief       easyVim核心模块头文件
+* @brief       easyVim核心模块
 * @details     定义了easyVim的核心模块相关函数和类，比如文件操作、文本操作等
 * @author      Super@redhecker
 * @copyright   Copyright (c) 2024
@@ -17,25 +17,25 @@ namespace ev {
  * @brief easyVim 基础文件类
  * @details 用于存储文件内容，提供文件操作接口
  */
-class evFile{
+class EVFile{
 public:
-    enum class evFileStatus{
-        OK,         ///< 文件正常
-        NOT_EXIST,  ///< 文件不存在
-        OPEN_FAIL,  ///< 文件打开失败
-        READ_FAIL,  ///< 文件读取失败
-        WRITE_FAIL, ///< 文件写入失败
-        CLOSE_FAIL  ///< 文件关闭失败
+    enum EVFileStatus{
+        EVFILE_OK           = 0,         ///< 文件正常
+        EVFILE_NOT_EXIST    = 1,         ///< 文件不存在
+        EVFILE_OPEN_FAIL    = 2,         ///< 文件打开失败
+        EVFILE_READ_FAIL    = 3,         ///< 文件读取失败
+        EVFILE_WRITE_FAIL   = 4,         ///< 文件写入失败
+        EVFILE_CLOSE_FAIL   = 5          ///< 文件关闭失败
     };
 
-    evFile(const std::string& fileName) : fileName(fileName){}
-    ~evFile();
+    EVFile(std::string& fileName) : fileName(fileName){}
+    ~EVFile();
 
     /**
      * @brief 读取文件
      * @return evFileStatus 文件状态
      */
-    evFileStatus loadFile();
+    EVFileStatus loadFile();
 
 private:
     std::string                  fileName;     ///< 文件名
@@ -43,6 +43,6 @@ private:
     size_t                       start;        ///< 文件起始行号（由于文件可能很大，不能一次性把所有文件内容都load进来）
 };
     
-}
+} // namespace ev
 
 #endif //EASYVIM_CORE_HPP
