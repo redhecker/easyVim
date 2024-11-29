@@ -8,6 +8,9 @@
 #ifndef EASYVIM_INST_HPP
 #define EASYVIM_INST_HPP
 
+#include <string>
+#include <unordered_map>
+
 namespace ev {
     enum instType {
         INST_SAVE           = 0, ///< 保存
@@ -23,6 +26,35 @@ namespace ev {
         INST_CHANGE_CODEC   = 8, ///< 更改编码，需要参数指定新的编码
         // todo 增加更多指令，比如rsa加密解密
     };
+
+/**
+ * @class EVConfig
+ * @brief easyVim 指令配置类
+ * @details 用于存储指令信息以及拓展指令，支持从配置文件读取指令信息
+ */
+class EVConfig{
+public:
+    EVConfig(std::string f = ""){
+        fileName = f;
+    }
+    ~EVConfig();
+
+    /**
+     * @brief 读取配置文件
+     * @return evFileStatus 文件状态
+     */
+    EVFile::EVFileStatus loadConfig();
+
+    /**
+     * @brief 写入配置文件
+     * @return evFileStatus 文件状态
+     */
+    EVFile::EVFileStatus saveConfig();
+
+    std::string fileName;                           ///< 配置文件名
+    std::unordered_map<std::string, int> config;    ///< 配置信息
+};
+    
 }
 
 #endif //EASYVIM_INST_HPP

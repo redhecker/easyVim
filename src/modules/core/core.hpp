@@ -53,7 +53,6 @@ public:
 private:
     FILE* file; ///< 文件指针
 };
-    
 } // namespace ev
 
 #endif //EASYVIM_CORE_HPP
