@@ -2,6 +2,8 @@
 
 # easyVim
 
+
+
 [中文](#项目介绍) /
 [English](#project-introduction)
 
@@ -47,14 +49,8 @@ a simple vim-like text editor
     ./easyVim yourfile.txt
     ```
 
-    对于测试
-    ```shell
-    make test
-    ```
-    或者：
-    ```shell
-    ./tests./tests
-    ```
+    对于测试，可以使用`make test`
+    或者`./tests./tests`
 
 4. 生成动态库
    
