@@ -46,7 +46,13 @@ public:
      * @return 帮助信息
      */
     std::string help(){
-        std::string result = "";
+        std::string result = 
+            "                        _    ___         \n"
+            "  ___  ____ ________  _| |  / (_)___ ___ \n"
+            " / _ \\/ __ `/ ___/ / / / | / / / __ `__ \\\n"
+            "/  __/ /_/ (__  ) /_/ /| |/ / / / / / / /\n"
+            "\\___/\\__,_/____/\\__, / |___/_/_/ /_/ /_/ \n"
+            "               /____/                    \n"; // logo
         for (size_t i = 0; i < commands.size(); i++){
             if (commands[i].size() > 1){
                 result += "--" + commands[i] + "\t" + helps[i] + "\n";
