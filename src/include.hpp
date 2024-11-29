@@ -14,6 +14,11 @@
 void version();
 
 /**
+ * @brief 用于打印作者信息
+ */
+void author();
+
+/**
  * @return 返回当前版本号
  */
 const char* getVersion();

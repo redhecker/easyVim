@@ -9,3 +9,7 @@ void version(){
 const char* getVersion(){
     return EV_VERSION;
 }
+
+void author(){
+    std::cout << "Author: Super github@redhecker" << std::endl;
+}

@@ -12,6 +12,8 @@
 #include "core/core.hpp"
 #include "encrypt/encrypt.hpp"
 #include "instructions/inst.hpp"
+#include "instructions/inst_command.hpp"
+#include "utils/parser.hpp"
 
 
 #define EV_F(n) n+264

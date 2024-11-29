@@ -101,9 +101,31 @@ bool command(ev::window* window_, ev::EVFile* file_){
 }
 
 
-int main(){
+int main(int argc, char** argv){
+    ev::Parser parser;
+    // parser.addCommand("command", "add command list");
+    // parser.addCommand("keyBind", "add key bind list");
+    parser.addCommand("c", "add command list");
+    parser.addCommand("k", "add key bind list");
+    std::unordered_map<std::string, std::string> result = parser.parse(argc, argv);
+    if        (result.find("v") != result.end()){
+        version();
+        return 0;
+    } else if (result.find("a") != result.end()){
+        author();
+        return 0;
+    } else if (result.find("h") != result.end()){
+        std::cout << parser.help() << std::endl;
+        return 0;
+    }
+
     ev::window window;
-    ev::EVFile file("test.txt");
+    std::string fileName = argv[argc - 1];
+    if (argv[argc - 1][0] == '-' || argv[argc - 2][0] == '-'){
+        std::cout << "Usage: easyVim ([params]) [file]" << std::endl;
+        return 0;
+    }
+    ev::EVFile file(fileName);
     file.loadFile();
     window.init();
     window.flushScreen(file.fileContent);
