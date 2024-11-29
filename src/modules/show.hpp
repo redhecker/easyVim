@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "config.hpp"
 
 
 namespace ev {
@@ -21,10 +22,11 @@ public:
     enum WindowStatus{
         NORMAL  = 0, ///< 正常模式
         INSERT  = 1, ///< 插入模式
-        COMMAND = 2  ///< 命令模式
+        COVER   = 2, ///< 覆盖模式
+        COMMAND = 3  ///< 命令模式
     };
 
-    window() : lineNumber(0), colNumber(0), status(NORMAL){}
+    window(EVFile* f) : lineNumber(0), colNumber(0), status(NORMAL), file(f){}
     ~window(){
         quit();
     }
@@ -34,19 +36,14 @@ public:
 
     /**@function   flushScreen
      * @brief 刷新整个屏幕
-     * @param file 文本内容
-     * @param x    屏幕左上文本行号
-     * @param y    屏幕左上文本列号
-     * @param start file的起始行号
      * @todo 优化显示效果: 1. 行号显示 2. 高亮显示 3. 滚动条
      */
-    void flushScreen(const std::vector<std::string>& file, size_t start = 0);
+    void flushScreen();
 
     /**@function   flushLine
-     * @brief 刷新一行文本
-     * @param line 文本内容
+     * @brief 刷新当前行文本
      */
-    void flushLine(const std::string& line);
+    void flushLine();
 
     /**@function   updateStatus
      * @brief 更新状态栏
@@ -79,6 +76,7 @@ private:
     size_t          lineNumber; ///< 当前屏幕首行对应file vector的行号
     size_t          colNumber;  ///< 当前屏幕首列对应file vector的列号
     WindowStatus    status;
+    EVFile*         file;
 };
 
 }

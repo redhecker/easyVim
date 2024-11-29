@@ -1,3 +1,10 @@
+/**
+ * @file parser.cpp
+ * @brief 解析命令行参数
+ * @author Super redhecker@github
+ * @modify 2024
+ */
+
 #include "parser.hpp"
 #include <algorithm>
 

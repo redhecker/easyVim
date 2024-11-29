@@ -1,3 +1,10 @@
+/**
+ * @file show.cpp
+ * @brief easyVim显示模块实现文件
+ * @author Super redhecker@github
+ * @modify 2024
+ */
+
 #include "show.hpp"
 #define EV_SHOW_DEBUG 1
 #if EV_SHOW_DEBUG
@@ -32,6 +39,8 @@ void window::updateStatus(){
         printw("--NORMAL--");
     } else if (status == INSERT) {
         printw("--INSERT--");
+    } else if (status == COVER) {
+        printw("--COVER-- ");
     } else if (status == COMMAND) {
         printw(":         ");
     }
@@ -98,15 +107,16 @@ void window::moveRight(){
     return;
 }
 
-void window::flushScreen(const std::vector<std::string>& file, size_t start){
+void window::flushScreen(){
     int row, col;
     getyx(stdscr, row, col);
     move(0, 0);
+    std::vector<std::string> content = file->fileContent;
     for (int i = 0; i < (LINES - 1); i++){
-        if (lineNumber + i < file.size()) {
+        if (lineNumber + i < content.size()) {
             attron(A_BOLD);
             // 打印行号
-            int lineNum = (lineNumber + i + start + 1) % 10000;
+            int lineNum = (lineNumber + i + file->start + 1) % 10000;
             if (lineNum > 999) {
                 printw("%d ", lineNum); 
             } else if (lineNum > 99) {
@@ -118,12 +128,12 @@ void window::flushScreen(const std::vector<std::string>& file, size_t start){
             }
             attroff(A_BOLD);
             // 打印行内对应内容
-            if (colNumber >= file[lineNumber + i].length()) {
+            if (colNumber >= content[lineNumber + i].length()) {
                 printw("\n");
-            } else if (file[lineNumber + i].length() > colNumber + COLS - 5) {
-                printw("%s\n", file[lineNumber + i].substr(colNumber, colNumber + COLS - 5).c_str());
+            } else if (content[lineNumber + i].length() > colNumber + COLS - 5) {
+                printw("%s\n", content[lineNumber + i].substr(colNumber, colNumber + COLS - 5).c_str());
             } else {
-                printw("%s\n", file[lineNumber + i].substr(colNumber).c_str());
+                printw("%s\n", content[lineNumber + i].substr(colNumber).c_str());
             }
         } else {
             attron(COLOR_PAIR(1));
@@ -136,10 +146,11 @@ void window::flushScreen(const std::vector<std::string>& file, size_t start){
     return;
 }
 
-void window::flushLine(const std::string& line){
+void window::flushLine(){
     int row, col;
     getyx(stdscr, row, col);
     move(row, 5);
+    std::string line = file->fileContent[lineNumber + row];
     // 打印行内对应内容
     if (line.length() > colNumber + COLS - 5) {
         printw("%s\n", line.substr(colNumber, colNumber + COLS - 5).c_str());

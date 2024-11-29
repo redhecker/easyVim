@@ -1,3 +1,10 @@
+/**
+ * @file inst_command.cpp
+ * @brief easyVim指令模块实现文件
+ * @author Super@redhecker
+ * @modify 2024
+ */
+
 #include "inst_command.hpp"
 #include <algorithm>
 

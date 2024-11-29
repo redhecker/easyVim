@@ -1,3 +1,10 @@
+/**
+ * @file inst_command.hpp
+ * @brief easyVim指令模块头文件
+ * @author Super@redhecker
+ * @modify 2024
+ */
+
 #ifndef EV_INST_COMMAND_HPP
 #define EV_INST_COMMAND_HPP
 

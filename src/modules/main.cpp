@@ -31,6 +31,10 @@ bool normal(ev::window* window_, ev::EVFile* file_){
             window_->setStatus(ev::window::WindowStatus::INSERT);
             window_->updateStatus();
             break;
+        case 'K':
+            window_->setStatus(ev::window::WindowStatus::COVER);
+            window_->updateStatus();
+            break;
         case ':':
             window_->setStatus(ev::window::WindowStatus::COMMAND);
             window_->updateStatus();
@@ -74,7 +78,14 @@ bool insert(ev::window* window_, ev::EVFile* file_){
             window_->moveDown();
             break;
         default:
-            // todo 文本插入相关逻辑
+            if (ch >= 32 && ch <= 126){
+                // todo 插入文本
+                if (window_->getStatus() == ev::window::WindowStatus::INSERT){
+                    
+                } else if (window_->getStatus() == ev::window::WindowStatus::COVER){
+                    printw("%c", ch);
+                }
+            }
             break;
     }
     return false;
@@ -119,16 +130,18 @@ int main(int argc, char** argv){
         return 0;
     }
 
-    ev::window window;
     std::string fileName = argv[argc - 1];
-    if (argv[argc - 1][0] == '-' || argv[argc - 2][0] == '-'){
+    if (argv[argc - 1][0] == '-' || argc == 1 || argv[argc - 2][0] == '-'){
+        std::cout << "ERROR: Invalid parameters"        << std::endl;
         std::cout << "Usage: easyVim ([params]) [file]" << std::endl;
+        std::cout << "use -h to check the params"       << std::endl;
         return 0;
     }
     ev::EVFile file(fileName);
     file.loadFile();
+    ev::window window(&file);
     window.init();
-    window.flushScreen(file.fileContent);
+    window.flushScreen();
     bool exit = false;
     while (!exit){
         ev::window::WindowStatus status = window.getStatus();
@@ -136,6 +149,7 @@ int main(int argc, char** argv){
         case ev::window::WindowStatus::NORMAL:
             normal(&window, &file);
             break;
+        case ev::window::WindowStatus::COVER:
         case ev::window::WindowStatus::INSERT:
             insert(&window, &file);
             break;

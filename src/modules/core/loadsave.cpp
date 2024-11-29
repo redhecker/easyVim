@@ -1,3 +1,10 @@
+/**
+ * @file loadsave.cpp
+ * @brief easyVim文件读写模块
+ * @author Super redhecker@github
+ * @modify 2024
+ */
+
 #include "core.hpp"
 #include <cstring>
 

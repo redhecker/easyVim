@@ -1,3 +1,10 @@
+/**
+ * @file parser.hpp
+ * @brief 解析命令行参数
+ * @author Super redhecker@github
+ * @modify 2024
+ */
+
 #ifndef UTILS_PARSER_HPP
 #define UTILS_PARSER_HPP
 
