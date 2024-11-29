@@ -2,7 +2,7 @@
 
 # easyVim
 
-
+![img.png](https://github.com/redhecker/easyVim/blob/main/docs/ev_logo.png)
 
 [中文](#项目介绍) /
 [English](#project-introduction)
