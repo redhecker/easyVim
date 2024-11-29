@@ -25,10 +25,11 @@ a simple vim-like text editor
 
     `easyVim`强依赖于`ncurses`库，因此需要下载依赖：
     ```shell
-    sudo apt install libfmt-dev
+    sudo apt install libncurses5-dev
     ```
 
 2. 编译
+   
    在当前文件夹下运行如下指令：
     ```shell
     mkdir build && cd build 
@@ -36,49 +37,31 @@ a simple vim-like text editor
     make -j4
     ```
 
+    注意：如果您希望运行测试文件，那么需要打开测试选项`-DTEST_OPTION=ON`
+
 3. 运行
+   
    在当前文件夹下运行如下指令：
     ```shell
     cd build/bin
-    ./main
+    ./easyVim yourfile.txt
+    ```
+
+    对于测试
+    ```shell
+    make test
+    ```
+    或者：
+    ```shell
+    ./tests./tests
+    ```
+
+4. 生成动态库
+   
+   使用如下命令后可以在`install`文件夹下找到对应的动态库链接
+    ```shell
+    make install
     ```
 
 
-
-
 ## project-introduction
-
-how to build (on ubuntu):
-
-step one: add dependency
-```
-sudo apt install libfmt-dev
-```
-step two: build
-
-if you want to build with google test:
-```
-git submodule update --init --recursive
-```
-```
-mkdir build && cd build 
-cmake .. -DTEST_OPTION=ON 
-make -j4
-```
-
-if you do not want to build with google test:
-```
-mkdir build && cd build 
-cmake .. -DTEST_OPTION=OFF 
-make -j4
-```
-
-step three: run the program
-
-`./main` at build/bin to run main program.
-
-`./tests` at build/tests to run tests.
-
-you can also run `make test` to run tests.
-
-you can use `make install` to get dynamic link library at install.
