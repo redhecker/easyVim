@@ -35,3 +35,42 @@ TEST(TestSuite, TestEncrypt_md5) {
 
     EXPECT_EQ(ev::md5(spec1), spec1_md5);
 }
+
+
+TEST(TestSuite, TestEncrypt_aes) {
+    std::vector<std::string> passage = {"12345671569732486354785107127", 
+                                        "gftyryujgkhjhhgvjgmjuyh", 
+                                        "1234675", 
+                                        "中文", 
+                                        "123476518905743561546301754567", 
+                                        "1543214143312"};
+    std::vector<std::string> enc = std::vector<std::string>();
+    std::vector<std::string> dec = std::vector<std::string>();
+    std::string key = "uaYBHtznvMU45n4f";
+    ev::aes_encrypt(&passage, &enc, key);
+    ev::aes_decrypt(&enc, &dec, key);
+    for (size_t i = 0; i < passage.size(); i++) {
+        EXPECT_NE(passage[i], enc[i]);
+        EXPECT_NE("", enc[i]);
+        EXPECT_EQ(passage[i], dec[i]);
+    }
+}
+
+TEST(TestSuite, TestEncrypt_aes2) {
+    std::vector<std::string> passage = {"12345671569732486354785107127", 
+                                        "gftyryujgkhjhhgvjgmjuyh", 
+                                        "1234675", 
+                                        "中文", 
+                                        "123476518905743561546301754567", 
+                                        "1543214143312"};
+    std::vector<std::string> enc = std::vector<std::string>();
+    std::vector<std::string> dec = std::vector<std::string>();
+    std::string key = "uaYBHt";
+    ev::aes_encrypt(&passage, &enc, key);
+    ev::aes_decrypt(&enc, &dec, key);
+    for (size_t i = 0; i < passage.size(); i++) {
+        EXPECT_NE(passage[i], enc[i]);
+        EXPECT_NE("", enc[i]);
+        EXPECT_EQ(passage[i], dec[i]);
+    }
+}

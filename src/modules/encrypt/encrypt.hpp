@@ -8,6 +8,7 @@
 #ifndef EASYVIM_ENCRYPT_HPP
 #define EASYVIM_ENCRYPT_HPP
 #include<string>
+#include<vector>
 
 namespace ev {
     
@@ -15,6 +16,12 @@ namespace ev {
      * @function md5加密算法
      */
     std::string md5(std::string input);
+
+    /**
+     * @function aes128位加密算法
+     */
+    void aes_encrypt(std::vector<std::string> *input, std::vector<std::string> *output, std::string key);
+    void aes_decrypt(std::vector<std::string> *input, std::vector<std::string> *output, std::string key);
 
 } // namespace ev
 
