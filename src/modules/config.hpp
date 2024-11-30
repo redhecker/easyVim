@@ -15,6 +15,10 @@
 #include "instructions/inst_command.hpp"
 #include "utils/parser.hpp"
 
+#include <vector>
+#include <string>
+#include <algorithm>
+
 
 #define EV_F(n) n+264
 #define EV_Esc 27

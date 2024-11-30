@@ -20,7 +20,6 @@
 #include "config.hpp"
 #include "../include.hpp"
 #include <iostream>
-#include <string>
 
 bool normal(ev::window* window_, ev::EVFile* file_){
     int ch;
@@ -120,10 +119,10 @@ int main(int argc, char** argv){
     parser.addCommand("k", "add key bind list");
     std::unordered_map<std::string, std::string> result = parser.parse(argc, argv);
     if        (result.find("v") != result.end()){
-        version();
+        ev::version();
         return 0;
     } else if (result.find("a") != result.end()){
-        author();
+        ev::author();
         return 0;
     } else if (result.find("h") != result.end()){
         std::cout << parser.help() << std::endl;
