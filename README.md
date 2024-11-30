@@ -30,7 +30,12 @@ a simple vim-like text editor
     sudo apt install libncurses5-dev
     ```
 
-2. 编译
+    如果你希望使用`googletest`进行测试，那么需要使用依赖：
+    ```shell
+    git submodule update --init --recursive
+    ```
+
+3. 编译
    
    在当前文件夹下运行如下指令：
     ```shell
@@ -41,7 +46,7 @@ a simple vim-like text editor
 
     注意：如果您希望运行测试文件，那么需要打开测试选项`-DTEST_OPTION=ON`
 
-3. 运行
+4. 运行
    
    在当前文件夹下运行如下指令：
     ```shell
@@ -52,7 +57,7 @@ a simple vim-like text editor
     对于测试，可以使用`make test`
     或者`./tests./tests`
 
-4. 生成动态库
+5. 生成动态库
    
    使用如下命令后可以在`install`文件夹下找到对应的动态库链接
     ```shell
