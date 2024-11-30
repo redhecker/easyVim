@@ -12,7 +12,7 @@
 #endif
 
 namespace ev {
-// 注意：LINES和COLS是ncurses库中的宏，分别表示当前终端的行数和列数，其中LINES需要减1，因为最后一行是状态栏
+// 注意：LINES和COLS是ncurses库中的变量，分别表示当前终端的行数和列数，其中LINES需要减1，因为最后一行是状态栏
     
 void window::init() {
     initscr();
@@ -107,7 +107,9 @@ void window::moveRight(){
     return;
 }
 
+//todo 不知道有没有办法能实现检测窗口尺寸变化并实时更新(不过应该问题不大，多调用一下这个函数)
 void window::flushScreen(){
+    updateStatus();
     int row, col;
     getyx(stdscr, row, col);
     move(0, 0);

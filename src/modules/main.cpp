@@ -13,6 +13,7 @@
 * 可以这样那样用。
 * 
 * @copyright   Copyright (c) 2024
+* @todo support utf-8 codec
 *************************************************
 */
 
@@ -21,71 +22,105 @@
 #include "../include.hpp"
 #include <iostream>
 
+enum NORMAL_MODE_FLAGS{
+    EV_NOTHING = 0,
+    EV_DELETE  = 1, ///< for delete operations, such as dd
+    EV_COPY    = 2, ///< for copy, such as yy
+    EV_NAVIG   = 3, ///< for navigation, such as gg
+    EV_CHANGE  = 4  ///< for r[char] -> cover a single char
+};
+
 bool normal(ev::window* window_, ev::EVFile* file_){
     int ch;
-    ch = window_->getInput();
     // todo 支持指令自定义
-    switch (ch){
-        case 'i':
-            window_->setStatus(ev::window::WindowStatus::INSERT);
-            window_->updateStatus();
-            break;
-        case 'K':
-            window_->setStatus(ev::window::WindowStatus::COVER);
-            window_->updateStatus();
-            break;
-        case ':':
-            window_->setStatus(ev::window::WindowStatus::COMMAND);
-            window_->updateStatus();
-            break;
-        case EV_UP:
-            window_->moveUp();
-            break;
-        case EV_DOWN:
-            window_->moveDown();
-            break;
-        case EV_LEFT:
-            window_->moveLeft();
-            break;
-        case EV_RIGHT:
-            window_->moveRight();
-            break;
-        default:
-            break;
+    // todo 指令不是单字符的情况？
+    bool exit = false, refresh = true;
+    NORMAL_MODE_FLAGS flag = EV_NOTHING;
+    while (!exit)
+    {
+        ch = window_->getInput();
+        if (refresh){
+            flag = EV_NOTHING;
+        }
+        refresh = true;
+        switch (ch){
+            case 'i':
+                window_->setStatus(ev::window::WindowStatus::INSERT);
+                window_->updateStatus();
+                exit = true;
+                break;
+            case 'K':
+                window_->setStatus(ev::window::WindowStatus::COVER);
+                window_->updateStatus();
+                exit = true;
+                break;
+            case ':':
+                window_->setStatus(ev::window::WindowStatus::COMMAND);
+                window_->updateStatus();
+                exit = true;
+                break;
+            case EV_UP:
+                window_->moveUp();
+                break;
+            case EV_DOWN:
+                window_->moveDown();
+                break;
+            case EV_LEFT:
+                window_->moveLeft();
+                break;
+            case EV_RIGHT:
+                window_->moveRight();
+                break;
+            case 'd':
+                if (flag == EV_DELETE){
+                    printw("delete this line\n");
+                } else {
+                    flag = EV_DELETE;
+                    refresh = false;
+                }
+            default:
+                break;
+        }
     }
     return false;
 }
 
 bool insert(ev::window* window_, ev::EVFile* file_){
     // todo insert 模式需要能对文本进行编辑
-    int ch = window_->getInput();
-    switch (ch){
-        case EV_Esc:
-            window_->setStatus(ev::window::WindowStatus::NORMAL);
-            window_->updateStatus();
-            break;
-        case EV_LEFT:
-            window_->moveLeft();
-            break;
-        case EV_RIGHT:
-            window_->moveRight();
-            break;
-        case EV_UP:
-            window_->moveUp();
-            break;
-        case EV_DOWN:
-            window_->moveDown();
-            break;
-        default:
-            if (ch >= 32 && ch <= 126){
-                // todo 插入文本
-                if (window_->getStatus() == ev::window::WindowStatus::INSERT){
-                    
-                } else if (window_->getStatus() == ev::window::WindowStatus::COVER){
-                    printw("%c", ch);
+    int ch;
+
+    bool exit = false;
+    while (!exit){
+        ch = window_->getInput();
+        switch (ch){
+            case EV_Esc:
+                window_->setStatus(ev::window::WindowStatus::NORMAL);
+                window_->updateStatus();
+                exit = true;
+                break;
+            case EV_LEFT:
+                window_->moveLeft();
+                break;
+            case EV_RIGHT:
+                window_->moveRight();
+                break;
+            case EV_UP:
+                window_->moveUp();
+                break;
+            case EV_DOWN:
+                window_->moveDown();
+                break;
+            default:
+                if (ch >= 32 && ch <= 126){
+                    // todo 插入文本
+                    if (window_->getStatus() == ev::window::WindowStatus::INSERT){
+                        
+                    } else if (window_->getStatus() == ev::window::WindowStatus::COVER){
+                        printw("%c", ch);
+                    }
                 }
-            }
-            break;
+                break;
+        }
     }
     return false;
 }
