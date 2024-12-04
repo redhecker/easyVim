@@ -7,7 +7,6 @@
 
 #ifndef EASYVIM_SHOW_HPP
 #define EASYVIM_SHOW_HPP
-#include <ncurses.h>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -28,7 +27,6 @@ public:
 
     window(EVFile* f) : lineNumber(0), colNumber(0), status(NORMAL), file(f){}
     ~window(){
-        quit();
     }
     void init();
     void quit();
@@ -53,6 +51,8 @@ public:
 
     std::string getCommand();
 
+    void moveTo(size_t line, size_t col);
+
     //todo 这几个类目前实现得不太对，比如上下的时候有可能会需要依据原先的形状来判断col的位置
     void moveUp();
     void moveDown();
@@ -70,6 +70,7 @@ public:
         status = s;
         return true;
     }
+    void printWin(std::string str);
 
 
 private:

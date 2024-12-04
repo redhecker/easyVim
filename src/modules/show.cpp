@@ -6,6 +6,7 @@
  */
 
 #include "show.hpp"
+#include <ncurses.h>
 #define EV_SHOW_DEBUG 1
 #if EV_SHOW_DEBUG
 #include <stdio.h>
@@ -55,17 +56,20 @@ int window::getInput(){
 }
 
 void window::quit(){
-    // endwin();
+    endwin();
     return;
 }
 
 void window::moveUp(){
     int x, y;
     getyx(stdscr, y, x);
-    if (y > 0) {
+    if (y > INIT_LINE) {
         move(y - 1, x);
-    } else {
-        //todo scroll
+    } else if (y == INIT_LINE) {
+        if (lineNumber > 0) {
+            lineNumber --;
+            flushScreen();
+        }
     }
     refresh();
     return;
@@ -74,10 +78,15 @@ void window::moveUp(){
 void window::moveDown(){
     int x, y;
     getyx(stdscr, y, x);
-    if (y < (LINES - 1) - 1) {
+    if (y < (LINES - 1) - 1 && (size_t)y < file->fileContent.size() - lineNumber - 1) {
         move(y + 1, x);
-    } else {
-        //todo scroll
+    } else if (y == (LINES - 1) - 1) {
+        if (y < file->fileContent.size() - lineNumber - 1) {
+            lineNumber ++;
+            flushScreen();
+        } else {
+            //todo 没有一次性导入所有文件的话有可能
+        }
     }
     refresh();
     return;
@@ -86,10 +95,11 @@ void window::moveDown(){
 void window::moveLeft(){
     int x, y;
     getyx(stdscr, y, x);
-    if (x > 0) {
+    if (x > INIT_COL) {
         move(y, x - 1);
-    } else {
-        //todo scroll
+    } else if (colNumber > 0) {
+        colNumber --;
+        flushScreen();
     }
     refresh();
     return;
@@ -98,10 +108,13 @@ void window::moveLeft(){
 void window::moveRight(){
     int x, y;
     getyx(stdscr, y, x);
-    if (x < COLS - 1) {
+    if (x < COLS - 1 && (size_t)x < file->fileContent[y + lineNumber].length() + INIT_COL - 1) {
         move(y, x + 1);
-    } else {
-        //todo scroll
+    } else if (x == COLS - 1) {
+        if (x < file->fileContent[y + lineNumber].length() + INIT_COL - colNumber - 1) {
+            colNumber ++;
+            flushScreen();
+        }
     }
     refresh();
     return;
@@ -133,7 +146,7 @@ void window::flushScreen(){
             if (colNumber >= content[lineNumber + i].length()) {
                 printw("\n");
             } else if (content[lineNumber + i].length() > colNumber + COLS - 5) {
-                printw("%s\n", content[lineNumber + i].substr(colNumber, colNumber + COLS - 5).c_str());
+                printw("%s", content[lineNumber + i].substr(colNumber, COLS - 5).c_str());
             } else {
                 printw("%s\n", content[lineNumber + i].substr(colNumber).c_str());
             }
@@ -177,6 +190,17 @@ std::string window::getCommand(){
     noecho();
     move(row, col);
     return std::string(buf);
+}
+
+void window::moveTo(size_t line, size_t col){
+    //todo 不安全的实现，尽量不要用
+    move(line, col);
+    return;
+}
+
+void window::printWin(std::string str){
+    printw(str.c_str());
+    return;
 }
 
 
