@@ -73,7 +73,7 @@ bool normal(ev::window* window_, ev::EVFile* file_){
                 break;
             case 'd':
                 if (flag == EV_DELETE){
-                    printw("delete this line\n");
+                    window_->printWin("delete\n");
                 } else {
                     flag = EV_DELETE;
                     refresh = false;
@@ -116,7 +116,7 @@ bool insert(ev::window* window_, ev::EVFile* file_){
                     if (window_->getStatus() == ev::window::WindowStatus::INSERT){
                         
                     } else if (window_->getStatus() == ev::window::WindowStatus::COVER){
-                        printw("%c", ch);
+
                     }
                 }
                 break;
@@ -171,10 +171,12 @@ int main(int argc, char** argv){
         std::cout << "use -h to check the params"       << std::endl;
         return 0;
     }
+
     ev::EVFile file(fileName);
     file.loadFile();
     ev::window window(&file);
     window.init();
+    window.moveCur();
     window.flushScreen();
     bool exit = false;
     while (!exit){
@@ -195,6 +197,6 @@ int main(int argc, char** argv){
         }
     }
 
-    endwin();
+    window.quit();
     return 0;
 }

@@ -27,5 +27,8 @@
 #define EV_UP 259
 #define EV_DOWN 258
 
+#define INIT_LINE 0
+#define INIT_COL 5
+
 
 #endif
