@@ -125,29 +125,31 @@ bool insert(ev::window* window_, ev::EVFile* file_){
     return false;
 }
 
-bool command(ev::window* window_, ev::EVFile* file_){
+bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
     std::string command = window_->getCommand();
 
-    // todo 支持指令信息自定义，默认回到normal模式
-    if (command == "q"){
-        // todo 判断文件是否有修改
-        return true;
-    } else if (command == "wq"){
-        file_->saveFile();
-        return true;
-    } else if (command == "q!"){
-        return true;
-    } else if (command == "w"){
-        file_->saveFile();
-    } else {
-        //todo 执行命令
+    std::vector<std::string> commands = std::vector<std::string>();
+    Stringsplit(command, ' ', commands);
+
+    ev::EVCommand::commandStatus re = comm_->execCommand(commands, file_);
+
+    bool res = false;
+    switch (re)
+    {
+    case ev::EVCommand::COMMAND_OK_EXIT:
+        res = true;
+        break;
+    default:
+        break;
     }
-    return false;
+
+    return res;
 }
 
 
 int main(int argc, char** argv){
     ev::Parser parser;
+    std::string commands = "", operations = "";
     // parser.addCommand("command", "add command list");
     // parser.addCommand("keyBind", "add key bind list");
     parser.addCommand("c", "add command list");
@@ -164,6 +166,13 @@ int main(int argc, char** argv){
         return 0;
     }
 
+    if (result.find("c") != result.end()){
+        commands = result.find("c")->second;
+    }
+    if (result.find("k") != result.end()){
+        operations = result.find("k")->second;
+    }
+
     std::string fileName = argv[argc - 1];
     if (argv[argc - 1][0] == '-' || argc == 1 || argv[argc - 2][0] == '-'){
         std::cout << "ERROR: Invalid parameters"        << std::endl;
@@ -171,6 +180,9 @@ int main(int argc, char** argv){
         std::cout << "use -h to check the params"       << std::endl;
         return 0;
     }
+
+    ev::EVCommand commandCfg(commands);
+    commandCfg.loadConfig();
 
     ev::EVFile file(fileName);
     file.loadFile();
@@ -190,7 +202,7 @@ int main(int argc, char** argv){
             insert(&window, &file);
             break;
         case ev::window::WindowStatus::COMMAND:
-            exit = command(&window, &file);
+            exit = command(&window, &file, &commandCfg);
             break;
         default:
             break;

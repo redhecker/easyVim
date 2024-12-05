@@ -41,7 +41,7 @@ public:
             fclose(file);
         }
     }
-    ~EVConfig();
+    ~EVConfig(){}
 
     /**
      * @brief 读取配置文件

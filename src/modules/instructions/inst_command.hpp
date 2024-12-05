@@ -40,6 +40,8 @@ public:
         COMMAND_FAIL = 1, ///< 指令执行失败
         COMMAND_PARAM_ERROR = 2, ///< 参数错误
         COMMAND_NOT_EXIST = 3, ///< 指令不存在
+
+        COMMAND_OK_EXIT = 31, ///< 指令执行成功并且退出程序
     };
 
     EVCommand(std::string f = "") : EVConfig(f){}
@@ -50,7 +52,7 @@ public:
      * @param inst 指令, params 参数列表
      * @return 指令执行结果
      */
-    commandStatus execCommand(std::string inst, std::vector<std::string> params);
+    commandStatus execCommand(std::vector<std::string> params, ev::EVFile* file_);
 
 };
 

@@ -60,8 +60,14 @@ EVFile::EVFileStatus EVConfig::loadConfig(){
 }
 
 
-EVCommand::commandStatus EVCommand::execCommand(std::string inst, std::vector<std::string> params){
-    switch (config[inst]){
+EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params, ev::EVFile* file_){
+    if (params.size() == 0) {
+        return EVCommand::COMMAND_FAIL;
+    }
+
+    EVCommand::commandStatus res = commandStatus::COMMAND_OK;
+
+    switch (config[params[0]]){
     case EVCommand::instType::INST_SAVE:
         // todo 保存文件
         break;
@@ -76,6 +82,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::string inst, std::vector<st
         break;
     case EVCommand::instType::INST_QUIT_F:
         // todo 强制退出
+        res = COMMAND_OK_EXIT;
         break;
     case EVCommand::instType::INST_SEARCH:
         // todo 搜索
@@ -96,7 +103,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::string inst, std::vector<st
         return commandStatus::COMMAND_NOT_EXIST;
     }
 
-    return commandStatus::COMMAND_OK;
+    return res;
 }
 
 } // namespace ev
