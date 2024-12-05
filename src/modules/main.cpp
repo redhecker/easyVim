@@ -176,7 +176,7 @@ int main(int argc, char** argv){
     file.loadFile();
     ev::window window(&file);
     window.init();
-    window.moveTo(INIT_LINE, INIT_COL);
+    window.moveCur();
     window.flushScreen();
     bool exit = false;
     while (!exit){
