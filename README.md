@@ -30,6 +30,11 @@ a simple vim-like text editor
     sudo apt install libncurses5-dev
     ```
 
+    如果你希望能支持UTF-8文字，那么需要使用`ncursesw`库，则下载依赖：
+    ```shell
+    sudo apt install libncursesw5-dev
+    ```
+
     如果你希望使用`googletest`进行测试，那么需要使用依赖：
     ```shell
     git submodule update --init --recursive
@@ -44,7 +49,11 @@ a simple vim-like text editor
     make -j4
     ```
 
-    注意：如果您希望运行测试文件，那么需要打开测试选项`-DTEST_OPTION=ON`
+    注意：
+    
+    1. 如果您希望运行测试文件，那么需要打开测试选项`-DTEST_OPTION=ON`
+    2. 如果您希望使用中文，那么需要打开UTF-8选项`-DUTF8_OPTION=ON`
+
 
 4. 运行
    

@@ -13,6 +13,11 @@ if (DEFINED TEST_OPTION)
     message("Test option is defined: " ${TEST_OPTION})
     add_definitions(-DTEST_OPTION)
 endif()
+option(UTF8_OPTION "UTF-8 option" OFF) # default is OFF
+if (DEFINED UTF8_OPTION)
+    message("UTF-8 option is defined: " ${UTF8_OPTION})
+    add_definitions(-DUTF8_OPTION)
+endif()
 
 #src file
 include_directories(src/modules)
@@ -36,9 +41,14 @@ endif()
 #     message("fmt not found")
 # endif()
 
-find_package(Curses REQUIRED)
-include_directories(${CURSES_INCLUDE_DIR})
-target_link_libraries(${CMAKE_PROJECT_NAME} ${CURSES_LIBRARIES})
+if (UTF8_OPTION)
+    target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ncursesw)
+else()
+    find_package(Curses REQUIRED)
+    include_directories(${CURSES_INCLUDE_DIR})
+    target_link_libraries(${CMAKE_PROJECT_NAME} ${CURSES_LIBRARIES})
+endif()
+
 
 # generate library 生成动态链接库(名字include_hello可以更改)
 add_library(include_easyVim SHARED ${PROJECT_SOURCE_DIR}/src/modules/lib.cpp)

@@ -7,6 +7,7 @@
 
 #include "show.hpp"
 #include <ncurses.h>
+#include <locale.h>
 #include <math.h>
 #define EV_SHOW_DEBUG 1
 #if EV_SHOW_DEBUG
@@ -17,6 +18,7 @@ namespace ev {
 // 注意：LINES和COLS是ncurses库中的变量，分别表示当前终端的行数和列数，其中LINES需要减1，因为最后一行是状态栏
     
 void window::init() {
+    setlocale(LC_ALL,"");
     initscr();
     raw();
     keypad(stdscr, TRUE);
