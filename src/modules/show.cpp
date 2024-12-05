@@ -92,7 +92,7 @@ void window::moveDown(){
             flushScreen();
         }
     } else if (y == (LINES - 1) - 1) {
-        if (y < file->fileContent.size() - lineNumber - 1) {
+        if ((size_t)y < file->fileContent.size() - lineNumber - 1) {
             lineNumber ++;
             curRow = y + lineNumber - INIT_LINE;
             moveCur();
@@ -127,7 +127,7 @@ void window::moveRight(){
         curCol = x + colNumber - INIT_COL + 1;
         moveCur();
     } else if (x == COLS - 1) {
-        if (x < file->fileContent[curRow].length() + INIT_COL - colNumber) {
+        if ((size_t)x < file->fileContent[curRow].length() + INIT_COL - colNumber) {
             colNumber ++;
             curCol = x + colNumber - INIT_COL;
             flushScreen();
@@ -247,7 +247,7 @@ bool window::moveCur(){
 }
 
 void window::printWin(std::string str){
-    printw(str.c_str());
+    printw("%s", str.c_str());
     return;
 }
 
