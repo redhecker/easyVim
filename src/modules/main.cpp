@@ -30,15 +30,14 @@ enum NORMAL_MODE_FLAGS{
     EV_CHANGE  = 4  ///< for r[char] -> cover a single char
 };
 
-bool normal(ev::window* window_, ev::EVFile* file_){
+bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
     int ch;
-    // todo 支持指令自定义
-    // todo 指令不是单字符的情况？
     bool exit = false, refresh = true;
     NORMAL_MODE_FLAGS flag = EV_NOTHING;
     while (!exit)
     {
         ch = window_->getInput();
+        ch = oper_->getOper(ch);
         if (refresh){
             flag = EV_NOTHING;
         }
@@ -59,15 +58,19 @@ bool normal(ev::window* window_, ev::EVFile* file_){
                 window_->updateStatus();
                 exit = true;
                 break;
+            case 'k':
             case EV_UP:
                 window_->moveUp();
                 break;
+            case 'j':
             case EV_DOWN:
                 window_->moveDown();
                 break;
+            case 'h':
             case EV_LEFT:
                 window_->moveLeft();
                 break;
+            case 'l':
             case EV_RIGHT:
                 window_->moveRight();
                 break;
@@ -114,7 +117,6 @@ bool insert(ev::window* window_, ev::EVFile* file_){
                 if (ch >= 32 && ch <= 126){
                     // todo 插入文本
                     if (window_->getStatus() == ev::window::WindowStatus::INSERT){
-                        
                     } else if (window_->getStatus() == ev::window::WindowStatus::COVER){
 
                     }
@@ -183,6 +185,8 @@ int main(int argc, char** argv){
 
     ev::EVCommand commandCfg(commands);
     commandCfg.loadConfig();
+    ev::EVOper operationCfg(operations);
+    operationCfg.loadConfig();
 
     ev::EVFile file(fileName);
     file.loadFile();
@@ -195,7 +199,7 @@ int main(int argc, char** argv){
         ev::window::WindowStatus status = window.getStatus();
         switch (status){
         case ev::window::WindowStatus::NORMAL:
-            normal(&window, &file);
+            normal(&window, &file, &operationCfg);
             break;
         case ev::window::WindowStatus::COVER:
         case ev::window::WindowStatus::INSERT:

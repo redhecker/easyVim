@@ -43,15 +43,8 @@ public:
     }
     ~EVConfig(){}
 
-    /**
-     * @brief 读取配置文件
-     * @return evFileStatus 文件状态
-     */
-    EVFile::EVFileStatus loadConfig();
-
     std::string fileName;                           ///< 配置文件名
     std::vector<std::string> instList;              ///< 指令列表
-    std::unordered_map<std::string, int> config;    ///< 配置信息
 };
     
 }

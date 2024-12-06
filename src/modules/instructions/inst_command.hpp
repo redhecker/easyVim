@@ -48,12 +48,19 @@ public:
     ~EVCommand(){}
 
     /**
+     * @brief 读取配置文件
+     * @return evFileStatus 文件状态
+     */
+    EVFile::EVFileStatus loadConfig();
+
+    /**
      * @brief 执行指令
      * @param inst 指令, params 参数列表
      * @return 指令执行结果
      */
     commandStatus execCommand(std::vector<std::string> params, ev::EVFile* file_);
 
+    std::unordered_map<std::string, int> config;    ///< 配置信息
 };
 
 } // namespace ev

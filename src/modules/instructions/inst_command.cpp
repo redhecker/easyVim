@@ -10,7 +10,7 @@
 
 namespace ev{
 
-EVFile::EVFileStatus EVConfig::loadConfig(){
+EVFile::EVFileStatus EVCommand::loadConfig(){
     // 加载默认配置
     config["w"] = EVCommand::instType::INST_SAVE;
     config["wq"] = EVCommand::instType::INST_SAVE_QUIT;

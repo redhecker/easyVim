@@ -13,6 +13,7 @@
 #include "encrypt/encrypt.hpp"
 #include "instructions/inst.hpp"
 #include "instructions/inst_command.hpp"
+#include "instructions/inst_operation.hpp"
 #include "utils/parser.hpp"
 
 #include <vector>
