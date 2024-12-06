@@ -150,6 +150,7 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
 
 
 int main(int argc, char** argv){
+    // todo 要创建新文件
     ev::Parser parser;
     std::string commands = "", operations = "";
     // parser.addCommand("command", "add command list");

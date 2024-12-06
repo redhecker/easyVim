@@ -30,7 +30,12 @@ public:
         EVFILE_CLOSE_FAIL   = 5          ///< 文件关闭失败
     };
 
-    EVFile(const std::string fileName) : fileName(fileName){}
+    EVFile(const std::string fileName) : fileName(fileName){
+        hasChange = false;
+        start = 0;
+        offset = 0;
+        hasCopy = false;
+    }
     ~EVFile();
 
     /**
@@ -45,13 +50,24 @@ public:
      */
     EVFileStatus saveFile();
 
+    EVFileStatus insertChar(int row, int col, char x);
+    EVFileStatus coverChar(int row, int col, char x);
+    EVFileStatus deleteChar(int row, int col, bool isFront);
+
+    EVFileStatus deleteLine(int rowB, int colB, int rowE = -1, int colE = -1);
+    EVFileStatus copyLine(int rowB, int colB, int rowE = -1, int colE = -1);
+    EVFileStatus pasteLine(int row, int col);
+
     std::string                  fileName;     ///< 文件名
     std::vector<std::string>     fileContent;  ///< 文件内容
+    bool                         hasChange;    ///< 文件是否有改动
     size_t                       start;        ///< 文件起始行号（由于文件可能很大，不能一次性把所有文件内容都load进来）
     size_t                       offset;       ///< 文件偏移量（由于文件可能很大，不能一次性把所有文件内容都load进来）
 
 private:
     FILE* file; ///< 文件指针
+    std::vector<std::string> copiedFiled;
+    bool hasCopy;
 };
 } // namespace ev
 

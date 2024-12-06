@@ -64,7 +64,7 @@ a simple vim-like text editor
     ```
 
     对于测试，可以使用`make test`
-    或者`./tests./tests`
+    或者`./tests/tests`
 
 5. 生成动态库
    
