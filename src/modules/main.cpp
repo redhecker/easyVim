@@ -45,17 +45,14 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
         switch (ch){
             case 'i':
                 window_->setStatus(ev::window::WindowStatus::INSERT);
-                window_->updateStatus();
                 exit = true;
                 break;
             case 'K':
                 window_->setStatus(ev::window::WindowStatus::COVER);
-                window_->updateStatus();
                 exit = true;
                 break;
             case ':':
                 window_->setStatus(ev::window::WindowStatus::COMMAND);
-                window_->updateStatus();
                 exit = true;
                 break;
             case 'k':
@@ -74,6 +71,15 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             case EV_RIGHT:
                 window_->moveRight();
                 break;
+            case '0':
+                window_->moveHead();
+                break;
+            case '$':
+                window_->moveEnd();
+                break;
+            case 'G':
+                window_->moveBottom();
+                break;
             case 'd':
                 if (flag == EV_DELETE){
                     window_->printWin("delete\n");
@@ -81,6 +87,16 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                     flag = EV_DELETE;
                     refresh = false;
                 }
+                break;
+            case 'g':
+                if (flag == EV_NAVIG){
+                    // gg
+                    window_->moveTop();
+                } else {
+                    flag = EV_NAVIG;
+                    refresh = false;
+                }
+                break;
             default:
                 break;
         }
@@ -98,7 +114,6 @@ bool insert(ev::window* window_, ev::EVFile* file_){
         switch (ch){
             case EV_Esc:
                 window_->setStatus(ev::window::WindowStatus::NORMAL);
-                window_->updateStatus();
                 exit = true;
                 break;
             case EV_LEFT:
@@ -150,7 +165,6 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
 
 
 int main(int argc, char** argv){
-    // todo 要创建新文件
     ev::Parser parser;
     std::string commands = "", operations = "";
     // parser.addCommand("command", "add command list");
@@ -190,7 +204,14 @@ int main(int argc, char** argv){
     operationCfg.loadConfig();
 
     ev::EVFile file(fileName);
-    file.loadFile();
+    if (file.loadFile() == ev::EVFile::EVFileStatus::EVFILE_OPEN_FAIL){
+        std::cout << "ERROR: Open file failed" << std::endl;
+        std::cout << "The file might not extist! if so, simply use 'touch fileName' to creat target file first" << std::endl;
+        return 0;
+    }
+    if (file.fileContent.size() == 0){
+        file.fileContent.push_back("");
+    }
     ev::window window(&file);
     window.init();
     window.moveCur();
@@ -198,6 +219,7 @@ int main(int argc, char** argv){
     bool exit = false;
     while (!exit){
         ev::window::WindowStatus status = window.getStatus();
+        window.updateStatus();
         switch (status){
         case ev::window::WindowStatus::NORMAL:
             normal(&window, &file, &operationCfg);

@@ -41,14 +41,15 @@ void window::updateStatus(){
     getyx(stdscr, row, col);
     attron(COLOR_PAIR(1));
     move(LINES-1, 0);
+    clrtoeol(); // 清除当前行
     if (status == NORMAL) {
         printw("--NORMAL--");
     } else if (status == INSERT) {
         printw("--INSERT--");
     } else if (status == COVER) {
-        printw("--COVER-- ");
+        printw("--COVER--");
     } else if (status == COMMAND) {
-        printw(":         ");
+        printw(":");
     }
     attroff(COLOR_PAIR(1));
     move(row, col);
@@ -66,7 +67,6 @@ void window::quit(){
 }
 
 void window::moveUp(){
-    int x, y;
     getyx(stdscr, y, x);
     if (y > INIT_LINE) {
         curRow = y + lineNumber - INIT_LINE - 1;
@@ -86,7 +86,6 @@ void window::moveUp(){
 }
 
 void window::moveDown(){
-    int x, y;
     getyx(stdscr, y, x);
     if (y < (LINES - 1) - 1 && (size_t)y < file->fileContent.size() - lineNumber - 1) {
         curRow = y + lineNumber - INIT_LINE + 1;
@@ -108,7 +107,6 @@ void window::moveDown(){
 }
 
 void window::moveLeft(){
-    int x, y;
     getyx(stdscr, y, x);
     if (x > INIT_COL) {
         curCol = x + colNumber - INIT_COL - 1;
@@ -123,7 +121,6 @@ void window::moveLeft(){
 }
 
 void window::moveRight(){
-    int x, y;
     getyx(stdscr, y, x);
     if (x < COLS - 1 && (size_t)x < file->fileContent[curRow].length() + INIT_COL - colNumber) {
         curCol = x + colNumber - INIT_COL + 1;
@@ -136,6 +133,50 @@ void window::moveRight(){
         }
     }
     refresh();
+    return;
+}
+
+void window::moveHead(){
+    curCol = 0;
+    if (moveCur()) {
+        flushScreen();
+    } else {
+        refresh();
+    }
+    return;
+}
+
+void window::moveEnd(){
+    curCol = file->fileContent[curRow].length();
+    if (moveCur()) {
+        flushScreen();
+    } else {
+        refresh();
+    }
+    return;
+}
+
+void window::moveTop(){
+    // todo 如果文件被分块读取的话，需要有别的操作
+    curRow = 0;
+    curCol = 0;
+    if (moveCur()) {
+        flushScreen();
+    } else {
+        refresh();
+    }
+    return;
+}
+
+void window::moveBottom(){
+    // todo 如果文件被分块读取的话，需要有别的操作
+    curRow = file->fileContent.size() - 1;
+    curCol = 0;
+    if (moveCur()) {
+        flushScreen();
+    } else {
+        refresh();
+    }
     return;
 }
 
@@ -226,8 +267,10 @@ bool window::moveCur(){
     }
     if (curRow < lineNumber) {
         lineNumber = curRow;
-    } else if (curRow > lineNumber + LINES - INIT_LINE - 1) {
-        lineNumber = curRow - LINES + INIT_LINE + 1;
+        result = true;
+    } else if (curRow >= lineNumber + LINES - 1 - INIT_LINE) {
+        lineNumber = curRow - (LINES - 1) + INIT_LINE + 1;
+        result = true;
     }
     size_t cc = curCol;
 

@@ -65,9 +65,9 @@ public:
     size_t                       offset;       ///< 文件偏移量（由于文件可能很大，不能一次性把所有文件内容都load进来）
 
 private:
-    FILE* file; ///< 文件指针
-    std::vector<std::string> copiedFiled;
-    bool hasCopy;
+    FILE* file;                          ///< 文件指针
+    std::vector<std::string> copiedFile; ///< 复制的文件内容
+    bool hasCopy;                        ///< 复制内容是否有效
 };
 } // namespace ev
 
