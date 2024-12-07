@@ -74,6 +74,15 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             case EV_RIGHT:
                 window_->moveRight();
                 break;
+            case '0':
+                window_->moveHead();
+                break;
+            case '$':
+                window_->moveEnd();
+                break;
+            case 'G':
+                window_->moveBottom();
+                break;
             case 'd':
                 if (flag == EV_DELETE){
                     window_->printWin("delete\n");
@@ -81,6 +90,16 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                     flag = EV_DELETE;
                     refresh = false;
                 }
+                break;
+            case 'g':
+                if (flag == EV_NAVIG){
+                    // gg
+                    window_->moveTop();
+                } else {
+                    flag = EV_NAVIG;
+                    refresh = false;
+                }
+                break;
             default:
                 break;
         }

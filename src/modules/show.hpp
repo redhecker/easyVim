@@ -54,15 +54,15 @@ public:
     void moveTo(size_t line, size_t col);
     bool moveCur();
 
-    //todo 这几个类目前实现得不太对，比如上下的时候有可能会需要依据原先的形状来判断col的位置
     void moveUp();
     void moveDown();
     void moveLeft();
     void moveRight();
     void moveHead();
-    void moveTail();
-    void moveBegin();
     void moveEnd();
+    void moveTop();
+    void moveBottom();
+
 
     WindowStatus getStatus(){
         return status;

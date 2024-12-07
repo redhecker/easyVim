@@ -122,6 +122,50 @@ void window::moveLeft(){
     return;
 }
 
+void window::moveHead(){
+    curCol = 0;
+    if (moveCur()) {
+        flushScreen();
+    } else {
+        refresh();
+    }
+    return;
+}
+
+void window::moveEnd(){
+    curCol = file->fileContent[curRow].length();
+    if (moveCur()) {
+        flushScreen();
+    } else {
+        refresh();
+    }
+    return;
+}
+
+void window::moveTop(){
+    // todo 如果文件被分块读取的话，需要有别的操作
+    curRow = 0;
+    curCol = 0;
+    if (moveCur()) {
+        flushScreen();
+    } else {
+        refresh();
+    }
+    return;
+}
+
+void window::moveBottom(){
+    // todo 如果文件被分块读取的话，需要有别的操作
+    curRow = file->fileContent.size() - 1;
+    curCol = 0;
+    if (moveCur()) {
+        flushScreen();
+    } else {
+        refresh();
+    }
+    return;
+}
+
 void window::moveRight(){
     int x, y;
     getyx(stdscr, y, x);
@@ -226,8 +270,10 @@ bool window::moveCur(){
     }
     if (curRow < lineNumber) {
         lineNumber = curRow;
-    } else if (curRow > lineNumber + LINES - INIT_LINE - 1) {
-        lineNumber = curRow - LINES + INIT_LINE + 1;
+        result = true;
+    } else if (curRow >= lineNumber + LINES - 1 - INIT_LINE) {
+        lineNumber = curRow - (LINES - 1) + INIT_LINE + 1;
+        result = true;
     }
     size_t cc = curCol;
 
