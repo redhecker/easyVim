@@ -150,7 +150,6 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
 
 
 int main(int argc, char** argv){
-    // todo 要创建新文件
     ev::Parser parser;
     std::string commands = "", operations = "";
     // parser.addCommand("command", "add command list");
@@ -190,7 +189,14 @@ int main(int argc, char** argv){
     operationCfg.loadConfig();
 
     ev::EVFile file(fileName);
-    file.loadFile();
+    if (file.loadFile() == ev::EVFile::EVFileStatus::EVFILE_OPEN_FAIL){
+        std::cout << "ERROR: Open file failed" << std::endl;
+        std::cout << "The file might not extist! if so, simply use 'touch fileName' to creat target file first" << std::endl;
+        return 0;
+    }
+    if (file.fileContent.size() == 0){
+        file.fileContent.push_back("");
+    }
     ev::window window(&file);
     window.init();
     window.moveCur();
