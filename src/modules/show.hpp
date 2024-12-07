@@ -30,7 +30,18 @@ public:
     }
     void init();
     void quit();
+
+    /**@function   getInput
+     * @brief 获取用户输入，用户一旦输入就立即返回
+     * @return 用户输入的ASCII码
+     */
     int  getInput();
+
+    /**@function   getCommand
+     * @brief 获取命令行输入，遇到'\n'返回输入字符串
+     * @return 命令行输入字符串
+     */
+    std::string getCommand();
 
     /**@function   flushScreen
      * @brief 刷新整个屏幕
@@ -49,18 +60,54 @@ public:
      */
     void updateStatus();
 
-    std::string getCommand();
-
     void moveTo(size_t line, size_t col);
+
+    /**@function   moveCur
+     * @brief 移动光标到当前行，列
+     * @details 根据当前光标位置，判断是否需要刷新屏幕
+     * @note 内部方法，理论上不应该被外部调用
+     * @return 是否需要刷新屏幕
+     */
     bool moveCur();
 
+    /**@function   moveUp
+     * @brief 光标上移
+     */
     void moveUp();
+
+    /**@function   moveDown
+     * @brief 光标下移
+     */
     void moveDown();
+
+    /**@function   moveLeft
+     * @brief 光标左移
+     */
     void moveLeft();
+
+    /**@function   moveRight
+     * @brief 光标右移
+     */
     void moveRight();
+
+    /**@function   moveHead
+     * @brief 光标移动到行首
+     */
     void moveHead();
+
+    /**@function   moveEnd
+     * @brief 光标移动到行尾
+     */
     void moveEnd();
+
+    /**@function   moveTop
+     * @brief 光标移动到文件首行
+     */
     void moveTop();
+
+    /**@function   moveBottom
+     * @brief 光标移动到文件末行
+     */
     void moveBottom();
 
 

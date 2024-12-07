@@ -45,17 +45,14 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
         switch (ch){
             case 'i':
                 window_->setStatus(ev::window::WindowStatus::INSERT);
-                window_->updateStatus();
                 exit = true;
                 break;
             case 'K':
                 window_->setStatus(ev::window::WindowStatus::COVER);
-                window_->updateStatus();
                 exit = true;
                 break;
             case ':':
                 window_->setStatus(ev::window::WindowStatus::COMMAND);
-                window_->updateStatus();
                 exit = true;
                 break;
             case 'k':
@@ -117,7 +114,6 @@ bool insert(ev::window* window_, ev::EVFile* file_){
         switch (ch){
             case EV_Esc:
                 window_->setStatus(ev::window::WindowStatus::NORMAL);
-                window_->updateStatus();
                 exit = true;
                 break;
             case EV_LEFT:
@@ -223,6 +219,7 @@ int main(int argc, char** argv){
     bool exit = false;
     while (!exit){
         ev::window::WindowStatus status = window.getStatus();
+        window.updateStatus();
         switch (status){
         case ev::window::WindowStatus::NORMAL:
             normal(&window, &file, &operationCfg);

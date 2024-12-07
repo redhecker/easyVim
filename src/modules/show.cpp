@@ -41,14 +41,15 @@ void window::updateStatus(){
     getyx(stdscr, row, col);
     attron(COLOR_PAIR(1));
     move(LINES-1, 0);
+    clrtoeol(); // 清除当前行
     if (status == NORMAL) {
         printw("--NORMAL--");
     } else if (status == INSERT) {
         printw("--INSERT--");
     } else if (status == COVER) {
-        printw("--COVER-- ");
+        printw("--COVER--");
     } else if (status == COMMAND) {
-        printw(":         ");
+        printw(":");
     }
     attroff(COLOR_PAIR(1));
     move(row, col);
