@@ -80,6 +80,7 @@ private:
     size_t          curRow, curCol; ///< 光标在文件中的位置，与lineNumber和colNumber无关
     WindowStatus    status;
     EVFile*         file;
+    int             x, y;
 };
 
 }

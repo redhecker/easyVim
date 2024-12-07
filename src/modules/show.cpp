@@ -66,7 +66,6 @@ void window::quit(){
 }
 
 void window::moveUp(){
-    int x, y;
     getyx(stdscr, y, x);
     if (y > INIT_LINE) {
         curRow = y + lineNumber - INIT_LINE - 1;
@@ -86,7 +85,6 @@ void window::moveUp(){
 }
 
 void window::moveDown(){
-    int x, y;
     getyx(stdscr, y, x);
     if (y < (LINES - 1) - 1 && (size_t)y < file->fileContent.size() - lineNumber - 1) {
         curRow = y + lineNumber - INIT_LINE + 1;
@@ -108,7 +106,6 @@ void window::moveDown(){
 }
 
 void window::moveLeft(){
-    int x, y;
     getyx(stdscr, y, x);
     if (x > INIT_COL) {
         curCol = x + colNumber - INIT_COL - 1;
@@ -117,6 +114,22 @@ void window::moveLeft(){
         colNumber --;
         curCol = colNumber;
         flushScreen();
+    }
+    refresh();
+    return;
+}
+
+void window::moveRight(){
+    getyx(stdscr, y, x);
+    if (x < COLS - 1 && (size_t)x < file->fileContent[curRow].length() + INIT_COL - colNumber) {
+        curCol = x + colNumber - INIT_COL + 1;
+        moveCur();
+    } else if (x == COLS - 1) {
+        if ((size_t)x < file->fileContent[curRow].length() + INIT_COL - colNumber) {
+            colNumber ++;
+            curCol = x + colNumber - INIT_COL;
+            flushScreen();
+        }
     }
     refresh();
     return;
@@ -163,23 +176,6 @@ void window::moveBottom(){
     } else {
         refresh();
     }
-    return;
-}
-
-void window::moveRight(){
-    int x, y;
-    getyx(stdscr, y, x);
-    if (x < COLS - 1 && (size_t)x < file->fileContent[curRow].length() + INIT_COL - colNumber) {
-        curCol = x + colNumber - INIT_COL + 1;
-        moveCur();
-    } else if (x == COLS - 1) {
-        if ((size_t)x < file->fileContent[curRow].length() + INIT_COL - colNumber) {
-            colNumber ++;
-            curCol = x + colNumber - INIT_COL;
-            flushScreen();
-        }
-    }
-    refresh();
     return;
 }
 
