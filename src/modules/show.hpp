@@ -120,6 +120,14 @@ public:
     }
     void printWin(std::string str);
 
+    size_t getCurRow(){
+        return curRow;
+    }
+
+    size_t getCurCol(){
+        return curCol;
+    }
+
 
 private:
     size_t          lineNumber; ///< 当前屏幕首行对应file vector的行号

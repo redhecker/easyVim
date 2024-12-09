@@ -23,6 +23,10 @@
 
 #define EV_F(n) n+264
 #define EV_Esc 27
+#define EV_Enter 10
+#define EV_Tab 9
+#define EV_Backspace 263
+#define EV_Delete 330
 #define EV_LEFT 260
 #define EV_RIGHT 261
 #define EV_UP 259

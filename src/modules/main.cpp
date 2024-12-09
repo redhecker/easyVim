@@ -42,7 +42,7 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             flag = EV_NOTHING;
         }
         refresh = true;
-        switch (ch){
+        switch (ch) {
             case 'i':
                 window_->setStatus(ev::window::WindowStatus::INSERT);
                 exit = true;
@@ -80,6 +80,22 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             case 'G':
                 window_->moveBottom();
                 break;
+            case EV_Enter:
+                window_->moveDown();
+                window_->moveHead();
+                break;
+            case EV_Backspace:
+                if (window_->getCurCol() > 0){
+                    window_->moveLeft();
+                } else if (window_->getCurRow() > 0){
+                    window_->moveUp();
+                    window_->moveEnd();
+                }
+                break;
+            case 'D':
+            case EV_Delete:
+                // todo 删除当前字符
+                break;
             case 'd':
                 if (flag == EV_DELETE){
                     window_->printWin("delete\n");
@@ -98,6 +114,8 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                 }
                 break;
             default:
+                // //only for debugging
+                // printf("ch: %d\n", ch);
                 break;
         }
     }
@@ -111,7 +129,7 @@ bool insert(ev::window* window_, ev::EVFile* file_){
     bool exit = false;
     while (!exit){
         ch = window_->getInput();
-        switch (ch){
+        switch (ch) {
             case EV_Esc:
                 window_->setStatus(ev::window::WindowStatus::NORMAL);
                 exit = true;
@@ -127,6 +145,18 @@ bool insert(ev::window* window_, ev::EVFile* file_){
                 break;
             case EV_DOWN:
                 window_->moveDown();
+                break;
+            case EV_Backspace:
+                //todo
+                break;
+            case EV_Delete:
+                //todo
+                break;
+            case EV_Enter:
+                //todo
+                break;
+            case EV_Tab:
+                //todo
                 break;
             default:
                 if (ch >= 32 && ch <= 126){
@@ -151,13 +181,12 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
     ev::EVCommand::commandStatus re = comm_->execCommand(commands, file_);
 
     bool res = false;
-    switch (re)
-    {
-    case ev::EVCommand::COMMAND_OK_EXIT:
-        res = true;
-        break;
-    default:
-        break;
+    switch (re) {
+        case ev::EVCommand::COMMAND_OK_EXIT:
+            res = true;
+            break;
+        default:
+            break;
     }
 
     return res;
@@ -206,7 +235,9 @@ int main(int argc, char** argv){
     ev::EVFile file(fileName);
     if (file.loadFile() == ev::EVFile::EVFileStatus::EVFILE_OPEN_FAIL){
         std::cout << "ERROR: Open file failed" << std::endl;
-        std::cout << "The file might not extist! if so, simply use 'touch fileName' to creat target file first" << std::endl;
+        std::cout << 
+        "The file might not extist! if so, simply use 'touch fileName' to creat target file first" 
+        << std::endl;
         return 0;
     }
     if (file.fileContent.size() == 0){
