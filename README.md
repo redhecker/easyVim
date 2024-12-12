@@ -73,5 +73,29 @@ a simple vim-like text editor
     make install
     ```
 
+### :rocket: **尝试最新版本!**
+
+我们在`beta`版本中提供了多种实用工具，我们已经进行了初步的测试，您可以通过以下步骤进行部署尝试：
+
+- **多文件读写工具**
+
+    1. 首先您需要安装`gnome-terminal`依赖：
+   ```shell
+   sudo apt install gnome-terminal
+   ```
+
+   2. 然后在`cmake`时您需要打开选项`-DMWS_OPTION=ON`
+   3. 接下来您可以在`build`文件夹下找到可执行文件`mevim`，使用`./mevim`运行即可体验！
+
+    **注意：**
+
+    1. 您有可能需要sudo权限才能正确运行该程序，例如`sudo ./mevim`
+   
+    2. 如果您正在使用wsl2并且希望多文件读写时能够显示中文字符，并且您的wsl已经配置了中文环境，那么可以尝试（windows11系统）：
+    ```shell
+    sudo mkdir -p /usr/share/fonts/windows11
+    sudo cp /mnt/c/Windows/Fonts/* /usr/share/fonts/windows11
+    ```
+
 
 ## project-introduction
