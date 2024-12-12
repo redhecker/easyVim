@@ -18,6 +18,11 @@ if (DEFINED UTF8_OPTION)
     message("UTF-8 option is defined: " ${UTF8_OPTION})
     add_definitions(-DUTF8_OPTION)
 endif()
+option(MWS_OPTION "Beta option - multiWindow Support" OFF) # default is OFF
+if (DEFINED UTF8_OPTION)
+    message("multiWindow Support option is defined: " ${MWS_OPTION})
+    add_definitions(-DMWS_OPTION)
+endif()
 
 #src file
 include_directories(src/modules)
@@ -55,3 +60,8 @@ add_library(include_easyVim SHARED ${PROJECT_SOURCE_DIR}/src/modules/lib.cpp)
 install(TARGETS include_easyVim LIBRARY DESTINATION lib)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/install)
 install(FILES ${PROJECT_SOURCE_DIR}/src/include.hpp  DESTINATION include) 
+
+
+if (MWS_OPTION)
+    add_executable(mevim tools/EVcmd.cpp)
+endif()
