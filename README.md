@@ -30,11 +30,6 @@ a simple vim-like text editor
     sudo apt install libncurses5-dev
     ```
 
-    如果你希望能支持UTF-8文字，那么需要使用`ncursesw`库，则下载依赖：
-    ```shell
-    sudo apt install libncursesw5-dev
-    ```
-
     如果你希望使用`googletest`进行测试，那么需要使用依赖：
     ```shell
     git submodule update --init --recursive
@@ -52,7 +47,6 @@ a simple vim-like text editor
     注意：
     
     1. 如果您希望运行测试文件，那么需要打开测试选项`-DTEST_OPTION=ON`
-    2. 如果您希望使用中文，那么需要打开UTF-8选项`-DUTF8_OPTION=ON`
 
 
 4. 运行
@@ -76,6 +70,19 @@ a simple vim-like text editor
 ### :rocket: **尝试最新版本!**
 
 我们在`beta`版本中提供了多种实用工具，我们已经进行了初步的测试，您可以通过以下步骤进行部署尝试：
+
+- **中文补丁**
+    1. 如果你希望能支持UTF-8文字，那么需要使用`ncursesw`库，则下载依赖：
+    ```shell
+    sudo apt install libncursesw5-dev
+    ```
+    2. 然后在`cmake`时您需要打开选项`-DUTF8_OPTION=ON`
+       
+    **注意：**
+
+    :bomb: 由于中文字符的特殊性，目前读写中文字符都可能导致排版出现问题 :(
+
+  
 
 - **多文件读写工具**
 
