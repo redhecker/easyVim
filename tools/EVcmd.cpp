@@ -1,8 +1,9 @@
 #include<bits/stdc++.h>
 
 int main(){
-    bool exit = false, refresh = true;
-    int res;
+    bool exit = false;
+    // bool refresh = true;
+    // int res;
     std::string params = "";
 
     while (!exit) {
