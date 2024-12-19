@@ -233,10 +233,10 @@ int main(int argc, char** argv){
     operationCfg.loadConfig();
 
     ev::EVFile file(fileName);
-    if (file.loadFile() == ev::EVFile::EVFileStatus::EVFILE_OPEN_FAIL){
+    if (file.loadFile() == ev::EVFile::EVFileStatus::EVFILE_READ_FAIL){
         std::cout << "ERROR: Open file failed" << std::endl;
         std::cout << 
-        "The file might not extist! if so, simply use 'touch fileName' to creat target file first" 
+        "What a pity! The file is too long to read, please try to open a smaller file." 
         << std::endl;
         return 0;
     }
