@@ -36,12 +36,15 @@ public:
     };
 
     enum commandStatus {
-        COMMAND_OK = 0, ///< 指令执行成功
-        COMMAND_FAIL = 1, ///< 指令执行失败
+        COMMAND_OK          = 0, ///< 指令执行成功
+        COMMAND_FAIL        = 1, ///< 指令执行失败
         COMMAND_PARAM_ERROR = 2, ///< 参数错误
-        COMMAND_NOT_EXIST = 3, ///< 指令不存在
+        COMMAND_NOT_EXIST   = 3, ///< 指令不存在
 
-        COMMAND_OK_EXIT = 31, ///< 指令执行成功并且退出程序
+        COMMAND_TRY_UNSAVE_EXIT = 11, ///< 试图不保存文件退出
+        COMMAND_NO_MATCH_PATTERN = 12, ///< 查找不到匹配结果
+
+        COMMAND_OK_EXIT     = 31, ///< 指令执行成功并且退出程序
     };
 
     EVCommand(std::string f = "") : EVConfig(f){}

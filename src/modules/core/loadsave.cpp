@@ -44,16 +44,56 @@ EVFile::EVFileStatus EVFile::saveFile(){
     }
 
     for (auto& line : fileContent){
-        fputs(line.c_str(), file);
-        fputs("\n", file);
+        if (fputs(line.c_str(), file) == EOF) {
+            fclose(file);
+            return EVFILE_WRITE_FAIL;
+        }
+        if (fputs("\n", file) == EOF) {
+            fclose(file);
+            return EVFILE_WRITE_FAIL;
+        }
     }
 
-    fclose(file);
+    hasChange = false;
+    if (fclose(file) != 0)  
+    {
+        return EVFILE_CLOSE_FAIL;
+    }
     file = NULL;
 
     return EVFileStatus::EVFILE_OK;
 }
 
+
+EVFile::EVFileStatus EVFile::saveFileAs(const std::string& newFilePath) {
+    FILE* newFile = fopen(newFilePath.c_str(), "w");
+    if (!newFile) {
+        return EVFILE_OPEN_FAIL;
+    }
+
+    for (const auto& line : fileContent) {
+        if (fputs(line.c_str(), newFile) == EOF) {
+            fclose(newFile);
+            return EVFILE_WRITE_FAIL;
+        }
+        if (fputc('\n', newFile) == EOF) {
+            fclose(newFile);
+            return EVFILE_WRITE_FAIL;
+        }
+    }
+    if (fclose(newFile) != 0) {
+        return EVFILE_CLOSE_FAIL;
+    }
+    return EVFILE_OK;
+}
+
+
+EVFile::EVFileStatus EVFile::quitFile(){
+    if (fclose(file) == EOF){
+        return EVFileStatus::EVFILE_CLOSE_FAIL;
+    }
+    return EVFileStatus::EVFILE_OK;
+}
 
 EVFile::~EVFile(){
     if (file != NULL){

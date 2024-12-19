@@ -68,28 +68,124 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
     EVCommand::commandStatus res = commandStatus::COMMAND_OK;
 
     switch (config[params[0]]){
-    case EVCommand::instType::INST_SAVE:
-        // todo 保存文件
+    case EVCommand::instType::INST_SAVE:{
+        if (params.size() != 1){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        if (file_->saveFile() != EVFile::EVFileStatus::EVFILE_OK){
+            res = COMMAND_FAIL;
+            break;
+        }
+        res = COMMAND_OK;
         break;
-    case EVCommand::instType::INST_SAVE_NEW:
-        // todo 另存为
+    }
+    case EVCommand::instType::INST_SAVE_NEW:{
+        if (params.size() != 2)
+        {
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        const std::string& path = params[1];
+        bool check_path = true;
+        // todo 解析路径的正确性
+        if (check_path == false){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        if (file_->saveFileAs(path) != EVFile::EVFileStatus::EVFILE_OK){
+            res = COMMAND_FAIL;
+            break;
+        }
+        res = COMMAND_OK;
         break;
-    case EVCommand::instType::INST_QUIT:
-        // todo 退出
-        break;
-    case EVCommand::instType::INST_SAVE_QUIT:
-        // todo 保存并退出
-        break;
-    case EVCommand::instType::INST_QUIT_F:
-        // todo 强制退出
+    }
+    case EVCommand::instType::INST_QUIT:{
+        if (params.size() != 1){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        if (file_->hasChange){
+            res = COMMAND_TRY_UNSAVE_EXIT;
+            break;
+        }
+        if (file_->quitFile() != EVFile::EVFileStatus::EVFILE_OK){
+            res = COMMAND_FAIL;
+            break;
+        }
         res = COMMAND_OK_EXIT;
         break;
-    case EVCommand::instType::INST_SEARCH:
-        // todo 搜索
+    }
+    case EVCommand::instType::INST_SAVE_QUIT:{
+        if (params.size() != 1)
+        {
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        if (file_->saveFile() != EVFile::EVFileStatus::EVFILE_OK){
+            res = COMMAND_FAIL;
+            break;
+        }
+        if (file_->quitFile() != EVFile::EVFileStatus::EVFILE_OK){
+            res = COMMAND_FAIL;
+            break;
+        }
+        res = COMMAND_OK_EXIT;
         break;
-    case EVCommand::instType::INST_SEARCH_REPLACE:
-        // todo 搜索并替换
+    }
+    case EVCommand::instType::INST_QUIT_F:{
+        if (params.size() != 1)
+        {
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        
+        if (file_->quitFile() != EVFile::EVFileStatus::EVFILE_OK){
+            res = COMMAND_FAIL;
+            break;
+        }
+        res = COMMAND_OK_EXIT;
         break;
+    }
+    case EVCommand::instType::INST_SEARCH:{
+        if (params.size() != 2){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        if (file_->searchInFile(params[1]) == EVFile::EVFILE_NO_MATCH_PATTERN){
+            res = COMMAND_NO_MATCH_PATTERN;
+            break;
+        }
+        else{
+            res = COMMAND_OK;
+        }
+        break;
+    }
+    case EVCommand::instType::INST_SEARCH_REPLACE:{
+        if (params.size() != 3){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        
+        auto fileStatus = file_->searchReplace(params[1], params[2]);
+        if (fileStatus == EVFile::EVFILE_NO_MATCH_PATTERN){
+            res = COMMAND_NO_MATCH_PATTERN;
+            break;            
+        }
+        else if (fileStatus == EVFile::EVFILE_REPLACE_FAIL){
+            res = COMMAND_FAIL;
+            break;
+        }
+        else{
+            res = COMMAND_OK;
+            break;
+        }
+        break;
+    }
     case EVCommand::instType::INST_ENCRYPT:
         // todo 加密
         break;
