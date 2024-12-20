@@ -55,8 +55,6 @@ EVFile::EVFileStatus EVFile::loadFile(){
         // 如果末尾有换行符需要去掉
         if (buf[strlen(buf) - 1] == '\n'){
             buf[strlen(buf) - 1] = '\0';
-        } else {
-            return EVFileStatus::EVFILE_READ_FAIL; // 文件读取失败，文件单行太长（超过8191个字符）
         }
         fileContent.push_back(buf);
     }
@@ -120,7 +118,7 @@ EVFile::EVFileStatus EVFile::saveFileAs(const std::string& newFilePath) {
 
 
 EVFile::EVFileStatus EVFile::quitFile(){
-    if (fclose(file) == EOF){
+    if (file != NULL && fclose(file) == EOF){
         return EVFileStatus::EVFILE_CLOSE_FAIL;
     }
     return EVFileStatus::EVFILE_OK;

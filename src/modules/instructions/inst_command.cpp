@@ -18,6 +18,9 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
     config["q!"] = EVCommand::instType::INST_QUIT_F;
     config["wn"] = EVCommand::instType::INST_SAVE_NEW;
 
+    config["reload"] = EVCommand::instType::INST_RELOAD;
+    config["reload!"] = EVCommand::instType::INST_RELOAD_F;
+
     config["/"] = EVCommand::instType::INST_SEARCH;
     config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
     config["enc"] = EVCommand::instType::INST_ENCRYPT;
@@ -35,6 +38,10 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
             continue;
         } else if (key == "save"){
             config[value] = EVCommand::instType::INST_SAVE;
+        } else if (key == "reload"){
+            config[value] = EVCommand::instType::INST_RELOAD;
+        } else if (key == "reload!"){
+            config[value] = EVCommand::instType::INST_RELOAD_F;
         } else if (key == "save and quit"){
             config[value] = EVCommand::instType::INST_SAVE_QUIT;
         } else if (key == "quit"){
@@ -79,6 +86,35 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         }
         res = COMMAND_OK;
         break;
+    }
+    case EVCommand::instType::INST_RELOAD:{
+        if (params.size() != 1){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        if (file_->hasChange)
+        {
+            res = COMMAND_TRY_COVER_RELOAD;
+            break;
+        }
+        if (file_->loadFile() != EVFile::EVFileStatus::EVFILE_OK)
+        {
+            res = COMMAND_FAIL;
+            break;
+        }
+        res = COMMAND_OK;
+    }
+    case EVCommand::instType::INST_RELOAD_F:{
+        if (params.size() != 1){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        if (file_->loadFile() != EVFile::EVFileStatus::EVFILE_OK)
+        {
+            res = COMMAND_FAIL;
+            break;
+        }
+        res = COMMAND_OK;
     }
     case EVCommand::instType::INST_SAVE_NEW:{
         if (params.size() != 2)
