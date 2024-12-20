@@ -27,7 +27,8 @@ public:
         EVFILE_OPEN_FAIL    = 2,         ///< 文件打开失败
         EVFILE_READ_FAIL    = 3,         ///< 文件读取失败
         EVFILE_WRITE_FAIL   = 4,         ///< 文件写入失败
-        EVFILE_CLOSE_FAIL   = 5          ///< 文件关闭失败
+        EVFILE_CLOSE_FAIL   = 5,          ///< 文件关闭失败
+        EVFILE_OUT_OF_BOUND =6
     };
 
     EVFile(const std::string fileName) : fileName(fileName){
