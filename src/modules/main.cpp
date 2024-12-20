@@ -10,7 +10,7 @@
 * easyVim功能描述。
 * 
 * @section   用法描述 
-* 可以这样那样用。
+* 可以这样那样用
 * 
 * @copyright   Copyright (c) 2024
 * @todo support utf-8 codec
