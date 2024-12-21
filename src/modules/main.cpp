@@ -186,7 +186,6 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
             res = true;
             break;
         case ev::EVCommand::COMMAND_OK:
-            res = true;
             window_->flushScreen();
             break;
         default:

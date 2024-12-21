@@ -103,6 +103,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
             break;
         }
         res = COMMAND_OK;
+        break;
     }
     case EVCommand::instType::INST_RELOAD_F:{
         if (params.size() != 1){
@@ -115,6 +116,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
             break;
         }
         res = COMMAND_OK;
+        break;
     }
     case EVCommand::instType::INST_SAVE_NEW:{
         if (params.size() != 2)
@@ -192,13 +194,8 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
             break;
         }
 
-        if (file_->searchInFile(params[1]) == EVFile::EVFILE_NO_MATCH_PATTERN){
-            res = COMMAND_NO_MATCH_PATTERN;
-            break;
-        }
-        else{
-            res = COMMAND_OK;
-        }
+        res = (file_->searchInFile(params[1]) == EVFile::EVFILE_NO_MATCH_PATTERN) ? 
+            COMMAND_NO_MATCH_PATTERN : COMMAND_OK;
         break;
     }
     case EVCommand::instType::INST_SEARCH_REPLACE:{
@@ -209,16 +206,13 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         
         auto fileStatus = file_->searchReplace(params[1], params[2]);
         if (fileStatus == EVFile::EVFILE_NO_MATCH_PATTERN){
-            res = COMMAND_NO_MATCH_PATTERN;
-            break;            
+            res = COMMAND_NO_MATCH_PATTERN;        
         }
         else if (fileStatus == EVFile::EVFILE_REPLACE_FAIL){
             res = COMMAND_FAIL;
-            break;
         }
         else{
             res = COMMAND_OK;
-            break;
         }
         break;
     }
@@ -232,7 +226,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         // todo 更改编码
         break;
     default:
-        return commandStatus::COMMAND_NOT_EXIST;
+        res = commandStatus::COMMAND_NOT_EXIST;
     }
 
     return res;
