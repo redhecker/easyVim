@@ -34,6 +34,8 @@ public:
         INST_ENCRYPT        = 34, ///< 对称加密
         INST_DECRYPT        = 35, ///< 对称解密
 
+        INST_JUMP           = 61, ///< 跳转，需要参数指定跳转位置
+        INST_ESC            = 62, ///< 回到正常模式
         INST_CHANGE_CODEC   = 63, ///< 更改编码，需要参数指定新的编码
         // todo 增加更多指令，比如rsa加密解密
     };
@@ -51,6 +53,9 @@ public:
         COMMAND_NO_MATCH_PATTERN  = 31, ///< 查找不到匹配结果
 
         COMMAND_OK_EXIT           = 41, ///< 指令执行成功并且退出程序
+
+        COMMAND_JUMP              = 51, ///< 跳转
+        COMMAND_BACK              = 52, ///< 退出
     };
 
     EVCommand(std::string f = "") : EVConfig(f){}

@@ -99,6 +99,7 @@ public:
     std::vector<std::string>     copiedFile;   ///< 复制的文件内容
     bool                         hasCopy;      ///< 复制内容是否有效
     bool                         hasChange;    ///< 文件是否有改动
+    int                          jumpTo;       ///< 跳转行号
     size_t                       start;        ///< 文件起始行号（由于文件可能很大，不能一次性把所有文件内容都load进来）
     size_t                       offset;       ///< 文件偏移量（由于文件可能很大，不能一次性把所有文件内容都load进来）
 

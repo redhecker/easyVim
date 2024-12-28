@@ -164,7 +164,6 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
 }
 
 bool insert(ev::window* window_, ev::EVFile* file_){
-    // todo insert 模式需要能对文本进行编辑
     int ch;
 
     bool exit = false;
@@ -251,6 +250,13 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
         case ev::EVCommand::COMMAND_OK:
             window_->flushScreen();
             break;
+        case ev::EVCommand::COMMAND_JUMP:
+            window_->setCurRow(file_->jumpTo - 1);
+            window_->setStatus(ev::window::WindowStatus::NORMAL);
+            break;
+        case ev::EVCommand::COMMAND_BACK:
+            window_->setStatus(ev::window::WindowStatus::NORMAL);
+            break;
         default:
             break;
     }
@@ -316,7 +322,7 @@ int main(int argc, char** argv){
     bool exit = false;
     while (!exit){
         ev::window::WindowStatus status = window.getStatus();
-        window.updateStatus();
+        window.flushScreen();
         switch (status){
         case ev::window::WindowStatus::NORMAL:
             normal(&window, &file, &operationCfg);

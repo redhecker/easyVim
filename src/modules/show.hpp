@@ -132,6 +132,11 @@ public:
         return curCol;
     }
 
+    void setCurRow(size_t row){
+        curRow = row;
+        return;
+    }
+
 
 private:
     size_t          lineNumber; ///< 当前屏幕首行对应file vector的行号

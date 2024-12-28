@@ -17,6 +17,8 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
     config["q"] = EVCommand::instType::INST_QUIT;
     config["q!"] = EVCommand::instType::INST_QUIT_F;
     config["wn"] = EVCommand::instType::INST_SAVE_NEW;
+    config["j"] = EVCommand::instType::INST_JUMP;
+    config["exit"] = EVCommand::instType::INST_ESC;
 
     config["reload"] = EVCommand::instType::INST_RELOAD;
     config["reload!"] = EVCommand::instType::INST_RELOAD_F;
@@ -58,6 +60,10 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
             config[value] = EVCommand::instType::INST_DECRYPT;
         } else if (key == "change codec"){
             config[value] = EVCommand::instType::INST_CHANGE_CODEC;
+        } else if (key == "jump"){
+            config[value] = EVCommand::instType::INST_JUMP;
+        } else if (key == "esc"){
+            config[value] = EVCommand::instType::INST_ESC;
         } else {
             continue;
         }
@@ -72,7 +78,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         return EVCommand::COMMAND_FAIL;
     }
 
-    EVCommand::commandStatus res = commandStatus::COMMAND_OK;
+    EVCommand::commandStatus res = commandStatus::COMMAND_FAIL;
 
     switch (config[params[0]]){
     case EVCommand::instType::INST_SAVE:{
@@ -216,6 +222,28 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         }
         break;
     }
+    case EVCommand::instType::INST_JUMP:{
+        if (params.size() != 2){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        // todo 跳转
+        int num = stoi(params[1], nullptr, 10);
+        if (num == -1) {
+            num = file_->fileContent.size() - 1;
+        }
+        if (num < 0 || (size_t)num >= file_->fileContent.size()){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        file_->jumpTo = num;
+        res = COMMAND_JUMP;
+        break;
+    }
+    case EVCommand::instType::INST_ESC:
+        res = COMMAND_BACK;
+        break;
     case EVCommand::instType::INST_ENCRYPT:
         // todo 加密
         break;
