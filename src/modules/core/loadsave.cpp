@@ -2,6 +2,8 @@
  * @file loadsave.cpp
  * @brief easyVim文件读写模块
  * @author Super redhecker@github
+ * @author Liu Haoran Defect-sts@github
+ * @author Zhong Yong OptimistiCompound@github
  * @modify 2024
  */
 
@@ -84,6 +86,7 @@ EVFile::EVFileStatus EVFile::saveFile(){
 
     return EVFileStatus::EVFILE_OK;
 }
+
 EVFile::EVFileStatus EVFile::insertChar(int row, int col, char x) {
     if (row < 0 || row >= fileContent.size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
@@ -96,6 +99,7 @@ EVFile::EVFileStatus EVFile::insertChar(int row, int col, char x) {
 
     return EVFileStatus::EVFILE_OK;  
 }
+
 EVFile::EVFileStatus EVFile::coverChar(int row, int col, char x) {
     if (row < 0 || row >= fileContent.size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND; 
@@ -108,15 +112,14 @@ EVFile::EVFileStatus EVFile::coverChar(int row, int col, char x) {
 
     return EVFileStatus::EVFILE_OK;  
 }
+
 EVFile::EVFileStatus EVFile::deleteChar(int row, int col, bool isFront) {
     if (row < 0 || row >= fileContent.size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND; 
     }  
     if (col < 0 || col >= fileContent[row].size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND; 
-    }  
-
-    
+    }
 
     if (isFront) {  
         if (col > 0) {  
@@ -142,6 +145,7 @@ EVFile::EVFileStatus EVFile::deleteChar(int row, int col, bool isFront) {
     hasChange = true; 
     return EVFileStatus::EVFILE_OK; 
 }
+
 EVFile::EVFileStatus EVFile::deleteLine(int rowB, int colB, int rowE, int colE) {
     if (rowE == -1) {  
         rowE = fileContent.size() - 1;
@@ -154,6 +158,7 @@ EVFile::EVFileStatus EVFile::deleteLine(int rowB, int colB, int rowE, int colE) 
     hasChange = true;
     return EVFileStatus::EVFILE_OK; 
 }
+
 EVFile::EVFileStatus EVFile::copyLine(int rowB, int colB, int rowE, int colE) {  
     if (rowB < 0 || rowE < rowB || rowE >= fileContent.size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
@@ -187,9 +192,11 @@ EVFile::EVFileStatus EVFile::pasteLine(int row, int col) {
         row++; 
     }  
 
-    hasChange = true;  
+    hasChange = true;
     return EVFileStatus::EVFILE_OK;  
 }
+
+
 EVFile::~EVFile(){
     if (file != NULL){
         fclose(file);

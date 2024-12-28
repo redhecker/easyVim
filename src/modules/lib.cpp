@@ -14,7 +14,10 @@ const char* getVersion(){
 }
 
 void author(){
-    std::cout << "Author: Super github@redhecker" << std::endl;
+    std::cout << "Author: " << std::endl << 
+				"    Super      redhecker@github"         << std::endl <<
+				"    ZYong      OptimistiCompound@github" << std::endl <<
+				"    LHaorang   Defect-sts@github"        << std::endl;
 }
 
 bool EVencrypt(std::vector<std::string> *input, 

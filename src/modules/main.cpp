@@ -1,7 +1,8 @@
 /**@mainpage  easyVim
 * <table>
-* <tr><th>Project  <td>easyVim
-* <tr><th>Author   <td>Super github@redhecker
+* <tr><th>Author   <td>Zhu Chao      redhecker@github
+* <tr><th>Author   <td>Zhong Yong    OptimistiCompound@github
+* <tr><th>Author   <td>Liu Haoran    Defect-sts@github
 * </table>
 * @section   项目描述
 * easyVim 是一款类似vim的文本编辑器。
