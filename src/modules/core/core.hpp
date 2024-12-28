@@ -38,6 +38,8 @@ public:
         EVFILE_REPLACE_SUCCESS     = 13,         ///< 成功替换
         EVFILE_REPLACE_FAIL        = 14,         ///< 替换失败
 
+        EVFILE_COPY_NOTEXIST       = 20,         ///< 复制失败
+
     };
     EVFile(const std::string fileName) : fileName(fileName){
         hasChange = false;
@@ -90,7 +92,7 @@ public:
 
     EVFileStatus deleteLine(int rowB, int colB = 0, int rowE = 0, int colE = -1);
     EVFileStatus copyLine  (int rowB, int colB = 0, int rowE = 0, int colE = -1);
-    EVFileStatus pasteLine (int row , int col);
+    EVFileStatus pasteLine (int row);
 
     std::string                  fileName;     ///< 文件名
     std::vector<std::string>     fileContent;  ///< 文件内容

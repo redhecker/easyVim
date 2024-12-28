@@ -214,7 +214,14 @@ EVFile::EVFileStatus EVFile::deleteLine(int rowB, int colB, int rowE, int colE) 
     return EVFileStatus::EVFILE_OK;   
 }
 
-EVFile::EVFileStatus EVFile::copyLine(int rowB, int colB, int rowE, int colE) {  
+// todo 这里的实现是有问题的，但是目前无所谓，之后可能要改
+EVFile::EVFileStatus EVFile::copyLine(int rowB, int colB, int rowE, int colE) {
+    if (rowE == 0) {  
+        rowE = rowB;
+    }
+    if (colE == -1) {  
+        colE = fileContent[rowE].size() - 1; 
+    }
     if (rowB < 0 || rowE < rowB || (size_t)rowE >= fileContent.size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }  
@@ -227,28 +234,28 @@ EVFile::EVFileStatus EVFile::copyLine(int rowB, int colB, int rowE, int colE) {
             copiedFile.push_back(toCopy);  
         } else {  
             return EVFileStatus::EVFILE_OUT_OF_BOUND;   
-        }  
+        } 
     }  
 
-    hasCopy = true;    
+    hasCopy = true;
     return EVFileStatus::EVFILE_OK;  
 }  
 
-EVFile::EVFileStatus EVFile::pasteLine(int row, int col) {  
+EVFile::EVFileStatus EVFile::pasteLine(int row) {  
     if (!hasCopy) {  
-        return EVFileStatus::EVFILE_OUT_OF_BOUND;  
+        return EVFileStatus::EVFILE_COPY_NOTEXIST;  
     }  
     if (row < 0 || (size_t)row >= fileContent.size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }  
 
-    for (const auto& line : copiedFile) {  
-        fileContent.insert(fileContent.begin() + row, line);  
-        row++; 
-    }  
+    for (const auto& line : copiedFile) {
+        fileContent.insert(fileContent.begin() + row, line);
+        row++;
+    }
 
     hasChange = true;
-    return EVFileStatus::EVFILE_OK;  
+    return EVFileStatus::EVFILE_OK;
 }
 
 

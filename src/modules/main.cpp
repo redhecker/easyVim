@@ -93,6 +93,12 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             case 'G':
                 window_->moveBottom();
                 break;
+            case 'p':
+                window_->getCuryx(x, y);
+                file_->pasteLine(y + 1);
+                window_->moveDown();
+                window_->moveHead();
+                break;
             case EV_Enter:
                 window_->moveDown();
                 window_->moveHead();
@@ -128,6 +134,16 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                     window_->moveTop();
                 } else {
                     flag = EV_NAVIG;
+                    refresh = false;
+                }
+                break;
+            case 'y':
+                if (flag == EV_COPY){
+                    // yy
+                    window_->getCuryx(x, y);
+                    file_->copyLine(y);
+                } else {
+                    flag = EV_COPY;
                     refresh = false;
                 }
                 break;
