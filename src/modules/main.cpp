@@ -1,7 +1,8 @@
 /**@mainpage  easyVim
 * <table>
-* <tr><th>Project  <td>easyVim
-* <tr><th>Author   <td>Super github@redhecker
+* <tr><th>Author   <td>Zhu Chao      redhecker@github
+* <tr><th>Author   <td>Zhong Yong    OptimistiCompound@github
+* <tr><th>Author   <td>Liu Haoran    Defect-sts@github
 * </table>
 * @section   项目描述
 * easyVim 是一款类似vim的文本编辑器。
@@ -42,6 +43,18 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             flag = EV_NOTHING;
         }
         refresh = true;
+        if (flag == EV_CHANGE){
+            // cover
+            if (ch >= 32 && ch <= 126){
+                int x, y;
+                window_->getCuryx(x, y);
+                // file_->deleteChar(y, x, false);
+                // file_->insertChar(y, x, ch);
+                file_->coverChar(y, x, ch);
+                window_->refreshCur();
+            }
+            continue;
+        }
         switch (ch) {
             case 'i':
                 window_->setStatus(ev::window::WindowStatus::INSERT);
@@ -94,7 +107,11 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                 break;
             case 'D':
             case EV_Delete:
-                // todo 删除当前字符
+                // 删除当前字符
+                int x, y;
+                window_->getCuryx(x, y);
+                file_->deleteChar(y, x, false);
+                window_->refreshCur();
                 break;
             case 'd':
                 if (flag == EV_DELETE){
@@ -113,6 +130,12 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                     refresh = false;
                 }
                 break;
+            case 'r':
+                if (flag != EV_CHANGE){
+                    flag = EV_CHANGE;
+                    refresh = false;
+                }
+                break;
             default:
                 // //only for debugging
                 // printf("ch: %d\n", ch);
@@ -127,6 +150,7 @@ bool insert(ev::window* window_, ev::EVFile* file_){
     int ch;
 
     bool exit = false;
+    int x, y;
     while (!exit){
         ch = window_->getInput();
         switch (ch) {
@@ -147,27 +171,48 @@ bool insert(ev::window* window_, ev::EVFile* file_){
                 window_->moveDown();
                 break;
             case EV_Backspace:
-                //todo
+                window_->getCuryx(x, y);
+                file_->deleteChar(y, x, true);
+                window_->refreshCur(false);
+                if (window_->getCurCol() > 0){
+                    window_->moveLeft();
+                } else if (window_->getCurRow() > 0){
+                    window_->moveUp();
+                    window_->moveEnd();
+                }
                 break;
             case EV_Delete:
-                //todo
+                // 删除当前字符
+                window_->getCuryx(x, y);
+                file_->deleteChar(y, x, false);
+                window_->refreshCur();
                 break;
             case EV_Enter:
-                //todo
+                window_->getCuryx(x, y);
+                file_->insertChar(y, x, '\n');
+                window_->moveDown();
+                window_->moveHead();
                 break;
             case EV_Tab:
                 //todo
                 break;
             default:
                 if (ch >= 32 && ch <= 126){
-                    // todo 插入文本
+                    // 插入或者替换文本
+                    window_->getCuryx(x, y);
                     if (window_->getStatus() == ev::window::WindowStatus::INSERT){
+                        file_->insertChar(y, x, ch);
+                        window_->refreshCur(false);
+                        window_->moveRight();
                     } else if (window_->getStatus() == ev::window::WindowStatus::COVER){
-
+                        file_->coverChar(y, x, ch);
+                        window_->refreshCur(false);
+                        window_->moveRight();
                     }
                 }
                 break;
         }
+        window_->flushScreen();
     }
     return false;
 }

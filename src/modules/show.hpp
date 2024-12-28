@@ -120,6 +120,10 @@ public:
     }
     void printWin(std::string str);
 
+    void getCuryx(int& x, int& y);
+
+    void refreshCur(bool flush = true);
+
     size_t getCurRow(){
         return curRow;
     }
