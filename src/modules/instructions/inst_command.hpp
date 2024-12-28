@@ -26,22 +26,36 @@ public:
         INST_SAVE_QUIT      = 3, ///< 保存并退出
         INST_QUIT_F         = 4, ///< 强制退出
 
+        INST_RELOAD         = 10, ///< 重新加载，在打开多个文件的时候用于同步更改
+        INST_RELOAD_F       = 11, ///< 强制重新加载
+
         INST_SEARCH         = 32, ///< 搜索，需要参数指定搜索内容
         INST_SEARCH_REPLACE = 33, ///< 搜索并替换，需要参数指定搜索内容和替换内容 //todo 增加参数指定替换范围
         INST_ENCRYPT        = 34, ///< 对称加密
         INST_DECRYPT        = 35, ///< 对称解密
 
+        INST_JUMP           = 61, ///< 跳转，需要参数指定跳转位置
+        INST_ESC            = 62, ///< 回到正常模式
         INST_CHANGE_CODEC   = 63, ///< 更改编码，需要参数指定新的编码
         // todo 增加更多指令，比如rsa加密解密
     };
 
     enum commandStatus {
-        COMMAND_OK = 0, ///< 指令执行成功
-        COMMAND_FAIL = 1, ///< 指令执行失败
+        COMMAND_OK          = 0, ///< 指令执行成功
+        COMMAND_FAIL        = 1, ///< 指令执行失败
         COMMAND_PARAM_ERROR = 2, ///< 参数错误
-        COMMAND_NOT_EXIST = 3, ///< 指令不存在
+        COMMAND_NOT_EXIST   = 3, ///< 指令不存在
 
-        COMMAND_OK_EXIT = 31, ///< 指令执行成功并且退出程序
+        COMMAND_TRY_COVER_RELOAD  = 11, ///< 文件中有更改，试图进行覆盖式的重新加载
+
+        COMMAND_TRY_UNSAVE_EXIT   = 21, ///< 试图不保存文件退出
+        
+        COMMAND_NO_MATCH_PATTERN  = 31, ///< 查找不到匹配结果
+
+        COMMAND_OK_EXIT           = 41, ///< 指令执行成功并且退出程序
+
+        COMMAND_JUMP              = 51, ///< 跳转
+        COMMAND_BACK              = 52, ///< 退出
     };
 
     EVCommand(std::string f = "") : EVConfig(f){}

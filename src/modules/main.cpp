@@ -32,7 +32,7 @@ enum NORMAL_MODE_FLAGS{
 };
 
 bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
-    int ch;
+    int ch, x, y;
     bool exit = false, refresh = true;
     NORMAL_MODE_FLAGS flag = EV_NOTHING;
     while (!exit)
@@ -93,6 +93,12 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             case 'G':
                 window_->moveBottom();
                 break;
+            case 'p':
+                window_->getCuryx(x, y);
+                file_->pasteLine(y + 1);
+                window_->moveDown();
+                window_->moveHead();
+                break;
             case EV_Enter:
                 window_->moveDown();
                 window_->moveHead();
@@ -108,14 +114,15 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             case 'D':
             case EV_Delete:
                 // 删除当前字符
-                int x, y;
                 window_->getCuryx(x, y);
                 file_->deleteChar(y, x, false);
                 window_->refreshCur();
                 break;
             case 'd':
                 if (flag == EV_DELETE){
-                    window_->printWin("delete\n");
+                    window_->getCuryx(x, y);
+                    file_->deleteLine(y);
+                    window_->moveHead();
                 } else {
                     flag = EV_DELETE;
                     refresh = false;
@@ -130,6 +137,16 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                     refresh = false;
                 }
                 break;
+            case 'y':
+                if (flag == EV_COPY){
+                    // yy
+                    window_->getCuryx(x, y);
+                    file_->copyLine(y);
+                } else {
+                    flag = EV_COPY;
+                    refresh = false;
+                }
+                break;
             case 'r':
                 if (flag != EV_CHANGE){
                     flag = EV_CHANGE;
@@ -141,12 +158,12 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                 // printf("ch: %d\n", ch);
                 break;
         }
+        window_->flushScreen();
     }
     return false;
 }
 
 bool insert(ev::window* window_, ev::EVFile* file_){
-    // todo insert 模式需要能对文本进行编辑
     int ch;
 
     bool exit = false;
@@ -230,6 +247,16 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
         case ev::EVCommand::COMMAND_OK_EXIT:
             res = true;
             break;
+        case ev::EVCommand::COMMAND_OK:
+            window_->flushScreen();
+            break;
+        case ev::EVCommand::COMMAND_JUMP:
+            window_->setCurRow(file_->jumpTo - 1);
+            window_->setStatus(ev::window::WindowStatus::NORMAL);
+            break;
+        case ev::EVCommand::COMMAND_BACK:
+            window_->setStatus(ev::window::WindowStatus::NORMAL);
+            break;
         default:
             break;
     }
@@ -295,7 +322,7 @@ int main(int argc, char** argv){
     bool exit = false;
     while (!exit){
         ev::window::WindowStatus status = window.getStatus();
-        window.updateStatus();
+        window.flushScreen();
         switch (status){
         case ev::window::WindowStatus::NORMAL:
             normal(&window, &file, &operationCfg);
