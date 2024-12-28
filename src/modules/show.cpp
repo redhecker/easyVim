@@ -291,6 +291,27 @@ bool window::moveCur(){
     return result;
 }
 
+void window::getCuryx(int& x, int& y){
+    getyx(stdscr, y, x);
+    y -= INIT_LINE;
+    x -= INIT_COL;
+    y += lineNumber;
+    x += colNumber;
+}
+
+void window::refreshCur(bool flush){
+    int x, y;
+    getyx(stdscr, y, x);
+    y -= INIT_LINE;
+    x -= INIT_COL;
+    y += lineNumber;
+    x += colNumber;
+    curRow = (size_t)y;
+    curCol = (size_t)x;
+    if (flush)
+        flushScreen();
+}
+
 void window::printWin(std::string str){
     printw("%s", str.c_str());
     return;

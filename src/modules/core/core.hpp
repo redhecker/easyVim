@@ -21,15 +21,16 @@ namespace ev {
  */
 class EVFile{
 public:
+
     enum EVFileStatus{
         EVFILE_OK           = 0,         ///< 文件正常
         EVFILE_NOT_EXIST    = 1,         ///< 文件不存在 -> 创建文件
         EVFILE_OPEN_FAIL    = 2,         ///< 文件打开失败
         EVFILE_READ_FAIL    = 3,         ///< 文件读取失败
         EVFILE_WRITE_FAIL   = 4,         ///< 文件写入失败
-        EVFILE_CLOSE_FAIL   = 5          ///< 文件关闭失败
+        EVFILE_CLOSE_FAIL   = 5,         ///< 文件关闭失败
+        EVFILE_OUT_OF_BOUND = 6          ///< 指针超出文本位置
     };
-
     EVFile(const std::string fileName) : fileName(fileName){
         hasChange = false;
         start = 0;
@@ -60,14 +61,14 @@ public:
 
     std::string                  fileName;     ///< 文件名
     std::vector<std::string>     fileContent;  ///< 文件内容
+    std::vector<std::string>     copiedFile;   ///< 复制的文件内容
+    bool                         hasCopy;      ///< 复制内容是否有效
     bool                         hasChange;    ///< 文件是否有改动
     size_t                       start;        ///< 文件起始行号（由于文件可能很大，不能一次性把所有文件内容都load进来）
     size_t                       offset;       ///< 文件偏移量（由于文件可能很大，不能一次性把所有文件内容都load进来）
 
 private:
-    FILE* file;                          ///< 文件指针
-    std::vector<std::string> copiedFile; ///< 复制的文件内容
-    bool hasCopy;                        ///< 复制内容是否有效
+    FILE* file;    ///< 文件指针
 };
 } // namespace ev
 
