@@ -30,7 +30,7 @@ public:
         EVFILE_READ_FAIL        = 3,         ///< 文件读取失败
         EVFILE_WRITE_FAIL       = 4,         ///< 文件写入失败
         EVFILE_CLOSE_FAIL       = 5,         ///< 文件关闭失败
-        EVFILE_OUT_OF_BOUND     = 6          ///< 指针超出文本位置
+        EVFILE_OUT_OF_BOUND     = 6,         ///< 指针超出文本位置
 
         EVFILE_DIR_DOSE_NOT_EXIST  = 10,         ///< 路径不存在 -> 创建路径
         EVFILE_NO_MATCH_PATTERN    = 11,         ///< 找不到匹配的内容
@@ -88,9 +88,9 @@ public:
     EVFileStatus coverChar(int row, int col, char x);
     EVFileStatus deleteChar(int row, int col, bool isFront);
 
-    EVFileStatus deleteLine(int rowB, int colB, int rowE = -1, int colE = -1);
-    EVFileStatus copyLine(int rowB, int colB, int rowE = -1, int colE = -1);
-    EVFileStatus pasteLine(int row, int col);
+    EVFileStatus deleteLine(int rowB, int colB = 0, int rowE = 0, int colE = -1);
+    EVFileStatus copyLine  (int rowB, int colB = 0, int rowE = 0, int colE = -1);
+    EVFileStatus pasteLine (int row , int col);
 
     std::string                  fileName;     ///< 文件名
     std::vector<std::string>     fileContent;  ///< 文件内容

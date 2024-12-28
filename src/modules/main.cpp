@@ -32,7 +32,7 @@ enum NORMAL_MODE_FLAGS{
 };
 
 bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
-    int ch;
+    int ch, x, y;
     bool exit = false, refresh = true;
     NORMAL_MODE_FLAGS flag = EV_NOTHING;
     while (!exit)
@@ -108,14 +108,15 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
             case 'D':
             case EV_Delete:
                 // 删除当前字符
-                int x, y;
                 window_->getCuryx(x, y);
                 file_->deleteChar(y, x, false);
                 window_->refreshCur();
                 break;
             case 'd':
                 if (flag == EV_DELETE){
-                    window_->printWin("delete\n");
+                    window_->getCuryx(x, y);
+                    file_->deleteLine(y);
+                    window_->moveHead();
                 } else {
                     flag = EV_DELETE;
                     refresh = false;
@@ -141,6 +142,7 @@ bool normal(ev::window* window_, ev::EVFile* file_, ev::EVOper* oper_){
                 // printf("ch: %d\n", ch);
                 break;
         }
+        window_->flushScreen();
     }
     return false;
 }

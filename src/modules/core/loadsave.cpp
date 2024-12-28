@@ -158,26 +158,57 @@ EVFile::EVFileStatus EVFile::deleteChar(int row, int col, bool isFront) {
 EVFile::EVFileStatus EVFile::deleteLine(int rowB, int colB, int rowE, int colE) {
     if (rowE == -1) {  
         rowE = fileContent.size() - 1;
+    } else if (rowE == 0) {
+        rowE = rowB;
     }
-    if (rowB < 0 || rowB > rowE || (size_t)rowE >= fileContent.size()) {  
+    if (colE == -1) {  
+        colE = fileContent[rowE].size() - 1; 
+    }
+    if (rowB < 0 || rowE < rowB || colB < 0 || colE < colB) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
-    if (colB < 0 || colE < 0 || (size_t)colB >= fileContent[rowB].size() 
-    || (size_t)colE >= fileContent[rowE].size() || colB > colE) {  
+    if ((size_t)colB >= fileContent[rowB].size() 
+    ||  (size_t)colE >= fileContent[rowE].size()) {
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
 
-    for (int row = rowB; row <= rowE; ++row) {  
-        if (row == rowB) {  
-            fileContent[row].erase(fileContent[row].begin() + colB, fileContent[row].end());  
-        } else if (row == rowE) {  
-            fileContent[row].erase(fileContent[row].begin(), fileContent[row].begin() + colE + 2);  
-        } else {  
-            fileContent.erase(fileContent.begin() + row);  
-            --rowE;  
-            --row;   
-        }  
-    }  
+    if (rowB == rowE) {
+        std::string line = fileContent[rowB];
+        fileContent.erase(fileContent.begin() + rowB);
+        if (colB > 0 || (size_t)colE < line.size() - 1) {
+            fileContent.insert(fileContent.begin() + rowB, line.substr(0, colB) + line.substr(colE + 1));
+        } 
+    } else {
+        // todo 这里的实现目前还是有问题的，（考虑全部都不是默认值的情况）
+        for (int row = rowB; row <= rowE; ) {  
+            if (row == rowB) { 
+                std::string line = fileContent[row];
+                fileContent.erase(fileContent.begin() + row);
+                if (colB > 0) {
+                    fileContent.insert(fileContent.begin() + row, line.substr(0, colB));
+                    row++;
+                } else {
+                    rowE--;
+                }
+            } else if (row == rowE) {
+                std::string line = fileContent[row];
+                fileContent.erase(fileContent.begin() + row);
+                if ((size_t)colE < line.size() - 1) {
+                    fileContent.insert(fileContent.begin() + row, line.substr(colE + 1));
+                    row++;
+                } else {
+                    rowE--;
+                }
+            } else {  
+                fileContent.erase(fileContent.begin() + row);  
+                --rowE; 
+            }
+        }
+    }
+
+    if (fileContent.size() == 0) {
+        fileContent.push_back("");
+    }
 
     hasChange = true;  
     return EVFileStatus::EVFILE_OK;   
