@@ -88,7 +88,7 @@ EVFile::EVFileStatus EVFile::saveFile(){
 }
 
 EVFile::EVFileStatus EVFile::insertChar(int row, int col, char x) {  
-    if (row < 0 || row >= fileContent.size() || col < 0 || col > fileContent[row].size()) {  
+    if (row < 0 || (size_t)row >= fileContent.size() || col < 0 || (size_t)col > fileContent[row].size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
 
