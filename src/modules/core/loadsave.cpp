@@ -57,8 +57,6 @@ EVFile::EVFileStatus EVFile::loadFile(){
         // 如果末尾有换行符需要去掉
         if (buf[strlen(buf) - 1] == '\n'){
             buf[strlen(buf) - 1] = '\0';
-        } else {
-            return EVFileStatus::EVFILE_READ_FAIL; // 文件读取失败，文件单行太长（超过8191个字符）
         }
         fileContent.push_back(buf);
     }
@@ -88,7 +86,8 @@ EVFile::EVFileStatus EVFile::saveFile(){
 }
 
 EVFile::EVFileStatus EVFile::insertChar(int row, int col, char x) {  
-    if (row < 0 || (size_t)row >= fileContent.size() || col < 0 || (size_t)col > fileContent[row].size()) {  
+    if (row < 0 || (size_t)row >= fileContent.size() 
+    ||  col < 0 || (size_t)col >  fileContent[row].size()) { 
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
 
@@ -105,7 +104,8 @@ EVFile::EVFileStatus EVFile::insertChar(int row, int col, char x) {
 }
 
 EVFile::EVFileStatus EVFile::coverChar(int row, int col, char x) {
-    if (row < 0 || row >= fileContent.size() || col < 0 || col > fileContent[row].size()) {  
+    if (row < 0 || (size_t)row >= fileContent.size() 
+    ||  col < 0 || (size_t)col >  fileContent[row].size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
 
@@ -116,28 +116,28 @@ EVFile::EVFileStatus EVFile::coverChar(int row, int col, char x) {
 }
 
 EVFile::EVFileStatus EVFile::deleteChar(int row, int col, bool isFront) {
-    if (row < 0 || row >= fileContent.size() || col < 0 || col > fileContent[row].size()) {  
+    if (row < 0 || (size_t)row >= fileContent.size() 
+    ||  col < 0 || (size_t)col >  fileContent[row].size()) {
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
 
     if (isFront) {  
         if (col > 0) {  
             fileContent[row].erase(fileContent[row].begin() + col - 1);  
-        } else {  
-            if (row > 0) {  
-                size_t lastCol = fileContent[row - 1].size();  
+        } else {
+            // 这个目前的问题在于对光标的掌控不足
+            if (row > 0) {
+                // size_t lastCol = fileContent[row - 1].size();  
                 fileContent[row - 1].push_back(fileContent[row][0]); 
                 fileContent.erase(fileContent.begin() + row); 
-            }  
+            }
         }  
     } else {  
-        if (col < fileContent[row].size() - 1) {  
+        if ((size_t)col < fileContent[row].size()) {
             fileContent[row].erase(fileContent[row].begin() + col);  
-        } else {  
-            if (row < fileContent.size() - 1) {  
-                fileContent[row] += fileContent[row + 1];  
-                fileContent.erase(fileContent.begin() + row + 1); 
-            }  
+        } else if ((size_t)row < fileContent.size() - 1) {  
+            fileContent[row] += fileContent[row + 1];  
+            fileContent.erase(fileContent.begin() + row + 1);   
         }  
     }  
 
@@ -149,12 +149,11 @@ EVFile::EVFileStatus EVFile::deleteLine(int rowB, int colB, int rowE, int colE) 
     if (rowE == -1) {  
         rowE = fileContent.size() - 1;
     }
-    if (rowB < 0 || rowB > rowE || rowE >= fileContent.size()) {  
-        return EVFileStatus::EVFILE_OUT_OF_BOUND; 
-        return EVFileStatus::EVFILE_OUT_OF_BOUND; 
-        return EVFileStatus::EVFILE_OUT_OF_BOUND;   
+    if (rowB < 0 || rowB > rowE || (size_t)rowE >= fileContent.size()) {  
+        return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
-    if (colB < 0 || colE < 0 || colB >= fileContent[rowB].size() || colE >= fileContent[rowE].size() || colB > colE) {  
+    if (colB < 0 || colE < 0 || (size_t)colB >= fileContent[rowB].size() 
+    || (size_t)colE >= fileContent[rowE].size() || colB > colE) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
 
@@ -175,14 +174,14 @@ EVFile::EVFileStatus EVFile::deleteLine(int rowB, int colB, int rowE, int colE) 
 }
 
 EVFile::EVFileStatus EVFile::copyLine(int rowB, int colB, int rowE, int colE) {  
-    if (rowB < 0 || rowE < rowB || rowE >= fileContent.size()) {  
+    if (rowB < 0 || rowE < rowB || (size_t)rowE >= fileContent.size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }  
 
     copiedFile.clear();  
     for (int i = rowB; i <= rowE; ++i) { 
         std::string line = fileContent[i];  
-        if (colB >= 0 && colB < line.size() && (colE == -1 || colE < line.size())) {  
+        if (colB >= 0 && (size_t)colB < line.size() && (colE == -1 || (size_t)colE < line.size())) {  
             std::string toCopy = line.substr(colB, (colE == -1 ? std::string::npos : colE - colB + 1));  
             copiedFile.push_back(toCopy);  
         } else {  
@@ -198,7 +197,7 @@ EVFile::EVFileStatus EVFile::pasteLine(int row, int col) {
     if (!hasCopy) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }  
-    if (row < 0 || row >= fileContent.size()) {  
+    if (row < 0 || (size_t)row >= fileContent.size()) {  
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }  
 
