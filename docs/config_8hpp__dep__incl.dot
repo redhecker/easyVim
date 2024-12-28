@@ -1,0 +1,13 @@
+digraph "src/modules/config.hpp"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="src/modules/config.hpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="配置文件，头文件汇总"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="src/include.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$include_8hpp.html",tooltip="easyVim动态库头文件"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="src/modules/show.hpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$show_8hpp.html",tooltip="easyVim显示模块头文件"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="src/modules/show.cpp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$show_8cpp.html",tooltip="easyVim显示模块实现文件"];
+}
