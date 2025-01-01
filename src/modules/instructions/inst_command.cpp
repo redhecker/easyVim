@@ -6,6 +6,7 @@
  */
 
 #include "inst_command.hpp"
+#include "../encrypt/encrypt.hpp"
 #include <algorithm>
 
 namespace ev{
@@ -64,6 +65,10 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
             config[value] = EVCommand::instType::INST_JUMP;
         } else if (key == "esc"){
             config[value] = EVCommand::instType::INST_ESC;
+        } else if (key == "encrypt"){
+            config[value] = EVCommand::instType::INST_ENCRYPT;
+        } else if (key == "decrypt"){
+            config[value] = EVCommand::instType::INST_DECRYPT;
         } else {
             continue;
         }
@@ -244,12 +249,64 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
     case EVCommand::instType::INST_ESC:
         res = COMMAND_BACK;
         break;
-    case EVCommand::instType::INST_ENCRYPT:
-        // todo 加密
+    case EVCommand::instType::INST_ENCRYPT:{
+        if (params.size() != 2 && params.size() != 3){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        std::string key;
+        std::vector<std::string> enc;
+        if (params.size() == 2) {
+            key = params[1];
+            if (!ev::encrypt(&(file_->fileContent), &enc, key, EV_ENCRYPT_TYPE::EV_ENCRYPT_AES_BEGIN)){
+                res = COMMAND_FAIL;
+                break;
+            }
+        } else if (params[1] == "-f") {
+            key = params[2];
+            if (!ev::encrypt(&(file_->fileContent), &enc, key, EV_ENCRYPT_TYPE::EV_ENCRYPT_AES_NBEGIN)){
+                res = COMMAND_FAIL;
+                break;
+            }
+        } else {
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        file_->fileContent = enc;
+        file_->hasChange = true;
+        res = COMMAND_OK;
         break;
-    case EVCommand::instType::INST_DECRYPT:
-        // todo 解密
+    }
+    case EVCommand::instType::INST_DECRYPT:{
+        if (params.size() != 2 && params.size() != 3){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        std::string key;
+        std::vector<std::string> dec;
+        if (params.size() == 2) {
+            key = params[1];
+            if (!ev::decrypt(&(file_->fileContent), &dec, key, EV_DECRYPT_TYPE::EV_DECRYPT_AES_BEGIN)){
+                res = COMMAND_FAIL;
+                break;
+            }
+        } else if (params[1] == "-f") {
+            key = params[2];
+            if (!ev::decrypt(&(file_->fileContent), &dec, key, EV_DECRYPT_TYPE::EV_DECRYPT_AES_NBEGIN)){
+                res = COMMAND_FAIL;
+                break;
+            }
+        } else {
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        file_->fileContent = dec;
+        file_->hasChange = true;
+        res = COMMAND_OK;
         break;
+    }
     case EVCommand::instType::INST_CHANGE_CODEC:
         // todo 更改编码
         break;
