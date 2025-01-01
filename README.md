@@ -1,5 +1,6 @@
 <div align=center>
 
+
 ![img.png](https://github.com/redhecker/easyVim/blob/docs/images/logo.png)
 
 [中文](#项目介绍) /
