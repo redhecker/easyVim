@@ -253,6 +253,7 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
         case ev::EVCommand::COMMAND_JUMP:
             window_->setCurRow(file_->jumpTo - 1);
             window_->setStatus(ev::window::WindowStatus::NORMAL);
+            window_->flushScreen();
             break;
         case ev::EVCommand::COMMAND_BACK:
             window_->setStatus(ev::window::WindowStatus::NORMAL);
