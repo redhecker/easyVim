@@ -154,6 +154,8 @@ easyVim项目旨在打造一个简单好用的“阉割版”Vim，用户可以�
 
 [用户手册](https://github.com/redhecker/easyVim/wiki/%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C-%E2%80%90-users'-manual)
 
+[开发手册](https://github.com/redhecker/easyVim/wiki/%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C)
+
 [推荐语](https://github.com/redhecker/easyVim/wiki/%E6%8E%A8%E8%8D%90%E8%AF%AD)
 
 ## 致谢
@@ -255,7 +257,7 @@ make install
 
 We have provided several practical tools in the `beta` version, and we have already conducted preliminary tests. You can deploy and try them through the following steps:
 
-- **UTF-8 Patch**
+- **UTF-8 Support**
     1. If you want to support UTF-8 characters, you need to use the `ncursesw` library, and then download the dependencies:
     ```shell
     sudo apt install libncursesw5-dev
