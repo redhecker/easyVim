@@ -179,6 +179,9 @@ This project intends to make the following contributions:
 
 > This project is the course project for the "CS219 Advanced Computer Programming" course at Southern University of Science and Technology.
 
+## Project Structure
+![img.png](https://github.com/redhecker/easyVim/blob/docs/images/struct.png)
+
 ## File Structure
 ```
 .
