@@ -187,6 +187,7 @@ void window::flushScreen(){
     // getyx(stdscr, row, col);
     move(0, 0);
     std::vector<std::string> content = file->fileContent;
+    auto searchPosition = file->searchPosition;
     for (int i = 0; i < (LINES - 1); i++){
         if (lineNumber + i < content.size()) {
             attron(A_BOLD);
@@ -202,13 +203,40 @@ void window::flushScreen(){
                 printw("000%d ", lineNum); 
             }
             attroff(A_BOLD);
-            // 打印行内对应内容
-            if (colNumber >= content[lineNumber + i].length()) {
-                printw("\n");
-            } else if (content[lineNumber + i].length() > colNumber + COLS - 6) {
-                printw("%s", content[lineNumber + i].substr(colNumber, COLS - 5).c_str());
+
+          std::string lineContent = content[lineNumber + i];
+            size_t lastPos = 0;  // 用于追踪上一个打印的位置
+
+            // 遍历搜索位置并打印高亮内容
+            for (const auto& pos : searchPosition) {
+                size_t matchLine = pos.first; // 匹配的行号
+                size_t matchCol = pos.second; // 匹配的列号
+
+                // 只处理当前行的匹配
+                if (matchLine == lineNumber + i) {
+                    // 如果匹配列号在当前显示范围内
+                    if (matchCol >= colNumber && matchCol < colNumber + COLS - 5) {
+                        int offset = matchCol - colNumber; // 当前字符相对位置
+
+                        // 输出从上次输出到当前匹配位置之间的未高亮部分
+                        printw("%s", lineContent.substr(lastPos, offset - lastPos).c_str());
+
+                        // 高亮当前匹配字符
+                        attron(A_BOLD | COLOR_PAIR(1));
+                        printw("%c", lineContent[offset]);
+                        attroff(A_BOLD | COLOR_PAIR(1));
+
+                        // 更新 lastPos 到当前匹配位置的下一个字符
+                        lastPos = offset + 1;
+                    }
+                }
+            }
+
+            // 输出剩余部分
+            if (lastPos < lineContent.length()) {
+                printw("%s\n", lineContent.substr(lastPos).c_str());
             } else {
-                printw("%s\n", content[lineNumber + i].substr(colNumber).c_str());
+                printw("\n");
             }
         } else {
             attron(COLOR_PAIR(1));

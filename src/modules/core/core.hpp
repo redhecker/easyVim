@@ -75,16 +75,29 @@ public:
     EVFileStatus quitFile();    
 
     /**
+     * @brief 在文件中查找匹配的内容，大小写不敏感
+     * @param caseSensitive 指定是否大小写敏感
+     * @return evFileStatus 文件状态
+     */
+    EVFileStatus searchInFile(const std::string content, bool caseSensitive); 
+
+    /**
+     * @brief 在文件中查找匹配的内容并替换，大小写敏感
+     * @return evFileStatus 文件状态
+     */
+    EVFileStatus searchReplace(const std::string searchContent, const std::string replaceContent, bool caseSensitive); 
+
+    /**
      * @brief 在文件中查找匹配正则表达式的内容
      * @return evFileStatus 文件状态
      */
-    EVFileStatus searchInFile(const std::string regexPattern); 
+    EVFileStatus searchInFileRegex(const std::string regexPattern); 
 
     /**
      * @brief 在文件中查找匹配正则表达式的内容并替换
      * @return evFileStatus 文件状态
      */
-    EVFileStatus searchReplace(const std::string regexPattern, const std::string replacePattern); 
+    EVFileStatus searchReplaceRegex(const std::string regexPattern, const std::string replacePattern); 
 
     EVFileStatus insertChar(int row, int col, char x);
     EVFileStatus coverChar(int row, int col, char x);
@@ -102,24 +115,61 @@ public:
     int                          jumpTo;       ///< 跳转行号
     size_t                       start;        ///< 文件起始行号（由于文件可能很大，不能一次性把所有文件内容都load进来）
     size_t                       offset;       ///< 文件偏移量（由于文件可能很大，不能一次性把所有文件内容都load进来）
+    std::vector<std::pair<size_t,size_t>> searchPosition; ///< 查找结果在文件中的位置
 
 private:
     FILE* file;                          ///< 文件指针
-    std::vector<std::pair<int,int>> searchPosition;   ///< 查找结果在文件中的位置
 
     /**
-     * @brief 查找的辅助函数
+     * @brief 正则查找的辅助函数
      * @param regexPattern 正则表达式
-     * @return evFileStatus 文件状态
+     * @return 满足正则表达式的第一个字符位置
      */
-    std::vector<std::pair<int, int>> search(const std::string& regexPattern); 
+    std::vector<std::pair<size_t, size_t>> searchRegex(const std::string& regexPattern); 
 
     /**
-     * @brief searchReplace的辅助函数
+     * @brief searchReplaceRegex的辅助函数
      * @param pos替换的起始位置，replacePattern用于替换的正则表达式
      * @return evFileStatus 文件状态
      */
-    bool replace(const std::pair<int,int> pos, const std::string& replacePattern); 
+    bool replaceRegex(const std::pair<size_t,size_t> pos, const std::string& replacePattern); 
+
+    /**
+     * @brief 大小写敏感查找的辅助函数
+     * @param content 查找内容
+     * @return evFileStatus 文件状态
+     */
+    std::vector<std::pair<size_t, size_t>> search(const std::string& content); 
+
+    /**
+     * @brief 大小写不敏感查找的辅助函数
+     * @param content 查找内容
+     * @return 
+     */
+    std::vector<std::pair<size_t, size_t>> search_case_ins(const std::string& content);
+
+    /**
+     * @brief searchReplace的辅助函数
+     * @param content 查找内容
+     * @return 满足content的第一个位置
+     */
+    std::vector<std::pair<size_t, size_t>> search_first(const std::string& content);
+
+    /**
+     * @brief searchReplace的辅助函数，大小写不敏感
+     * @param content 查找内容
+     * @return 满足content的第一个位置
+     */
+    std::vector<std::pair<size_t, size_t>> search_first_case_ins(const std::string& content);    
+
+    /**
+     * @brief searchReplace的辅助函数
+     * @param pos 替换的起始位置
+     * @param len 搜索内容的长度
+     * @param replaceContent 用于替换的内容
+     * @return 替换后的一整行
+     */
+    bool replace(const std::pair<size_t,size_t> pos, int len, const std::string& replaceContent);
 };
 } // namespace ev
 

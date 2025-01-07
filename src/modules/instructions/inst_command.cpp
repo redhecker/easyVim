@@ -25,6 +25,7 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
     config["reload!"] = EVCommand::instType::INST_RELOAD_F;
 
     config["/"] = EVCommand::instType::INST_SEARCH;
+    config["c/"] = EVCommand::instType::INST_SEARCH_CASE_IS;
     config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
     config["enc"] = EVCommand::instType::INST_ENCRYPT;
     config["dec"] = EVCommand::instType::INST_DECRYPT;
@@ -53,6 +54,8 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
             config[value] = EVCommand::instType::INST_QUIT_F;
         } else if (key == "search"){
             config[value] = EVCommand::instType::INST_SEARCH;
+        } else if (key == "search case insensitive") {
+            config[value] = EVCommand::instType::INST_SEARCH_CASE_IS;
         } else if (key == "search and replace"){
             config[value] = EVCommand::instType::INST_SEARCH_REPLACE;
         } else if (key == "encrypt"){
@@ -205,7 +208,17 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
             break;
         }
 
-        res = (file_->searchInFile(params[1]) == EVFile::EVFILE_NO_MATCH_PATTERN) ? 
+        res = (file_->searchInFile(params[1], true) == EVFile::EVFILE_NO_MATCH_PATTERN) ? 
+            COMMAND_NO_MATCH_PATTERN : COMMAND_OK;
+        break;
+    }
+    case EVCommand::instType::INST_SEARCH_CASE_IS:{
+        if (params.size() != 2){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        res = (file_->searchInFile(params[1], false) == EVFile::EVFILE_NO_MATCH_PATTERN) ? 
             COMMAND_NO_MATCH_PATTERN : COMMAND_OK;
         break;
     }
@@ -215,7 +228,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
             break;
         }
         
-        auto fileStatus = file_->searchReplace(params[1], params[2]);
+        auto fileStatus = file_->searchReplace(params[1], params[2], true);
         if (fileStatus == EVFile::EVFILE_NO_MATCH_PATTERN){
             res = COMMAND_NO_MATCH_PATTERN;        
         }
@@ -246,9 +259,12 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         res = COMMAND_JUMP;
         break;
     }
-    case EVCommand::instType::INST_ESC:
+    case EVCommand::instType::INST_ESC:{
         res = COMMAND_BACK;
+        // 需要清空搜索结果，防止在NORMAL下刷新
+        file_->searchPosition.clear();
         break;
+    }
     case EVCommand::instType::INST_ENCRYPT:{
         if (params.size() != 2 && params.size() != 3){
             res = COMMAND_PARAM_ERROR;
