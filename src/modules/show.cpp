@@ -219,19 +219,19 @@ void window::flushScreen(){
                     // 只处理当前行的匹配
                     if (matchLine == lineNumber + i) {
                         // 如果匹配列号在当前显示范围内
-                        if (matchCol >= colNumber && matchCol < colNumber + COLS - 5) {
-                            int offset = matchCol - colNumber; // 当前字符相对位置
+                        if (matchCol >= lastPos && matchCol < colNumber + COLS - 5) {
+                            int offset = matchCol - lastPos; // 当前字符相对位置
 
                             // 输出从上次输出到当前匹配位置之间的未高亮部分
-                            printw("%s", lineContent.substr(lastPos, offset - lastPos).c_str());
+                            printw("%s", lineContent.substr(lastPos, offset).c_str());
 
                             // 高亮当前匹配字符
                             attron(A_BOLD | COLOR_PAIR(1));
-                            printw("%c", lineContent[offset]);
+                            printw("%c", lineContent[matchCol]);
                             attroff(A_BOLD | COLOR_PAIR(1));
 
                             // 更新 lastPos 到当前匹配位置的下一个字符
-                            lastPos = offset + 1;
+                            lastPos = matchCol + 1;
                         }
                     }
                 }
