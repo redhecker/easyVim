@@ -64,6 +64,7 @@ EVFile::EVFileStatus EVFile::loadFile(){
     fclose(file);
     file = NULL;
 
+    hasChange = false;
     return EVFileStatus::EVFILE_OK;
 }
 
