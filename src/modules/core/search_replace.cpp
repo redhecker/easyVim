@@ -188,6 +188,7 @@ bool EVFile::replace(const std::pair<size_t, size_t> pos, int len, const std::st
         line.resize(colIndex + replaceContent.size(), ' ');  // 用空格填充扩展的部分
     }
     line.replace(colIndex, len, replaceContent);
+    hasChange = true;
     return true;
 }
 
