@@ -22,7 +22,9 @@ public:
         NORMAL  = 0, ///< 正常模式
         INSERT  = 1, ///< 插入模式
         COVER   = 2, ///< 覆盖模式
-        COMMAND = 3  ///< 命令模式
+        COMMAND = 3, ///< 命令模式
+        WARNING_TRY_UNSAVE_QUIT = 4, ///< 尝试不保存退出
+        WARNING_PATTERN_NOT_FOUND = 5 ///< 未查找到匹配样式
     };
 
     window(EVFile* f) : lineNumber(0), colNumber(0), status(NORMAL), file(f){}
