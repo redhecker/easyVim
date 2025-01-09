@@ -105,13 +105,17 @@ Public Types</h2></td></tr>
 , <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a1e434ce9a5c850730dbaf8d8ff5b83ca">INST_RELOAD_F</a> = 11
 , <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a96e71beeba5a734d99ed17223eeb32b1">INST_SEARCH</a> = 32
 , <br />
-&#160;&#160;<a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6af300b83e727b1a80ae6d776148cfa266">INST_SEARCH_REPLACE</a> = 33
-, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a70f1d80264afb52c210efcfdd63752bf">INST_ENCRYPT</a> = 34
-, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a9a904ef22ae1f3893df93c8a13d723eb">INST_DECRYPT</a> = 35
-, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a4fc0df26f9b3bb34a69208e993824455">INST_JUMP</a> = 61
+&#160;&#160;<a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a0d6873060ec7eaa54a2f9d0a2cee0285">INST_SEARCH_CASE_IS</a> = 34
+, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6aebba28addbb43935d493e95f842caa3c">INST_SEARCH_REGEX</a> = 35
+, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6af300b83e727b1a80ae6d776148cfa266">INST_SEARCH_REPLACE</a> = 36
+, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6abe57156ed4bb710adebf1c6f6e0a425a">INST_SEARCH_REPLACE_CASE_IS</a> = 37
 , <br />
-&#160;&#160;<a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6aa09290448cd285b2a00bb007f6097ccc">INST_ESC</a> = 62
-, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a897aef70dc66aa48efdaeefb51d10f0d">INST_CHANGE_CODEC</a> = 63
+&#160;&#160;<a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a70f1d80264afb52c210efcfdd63752bf">INST_ENCRYPT</a> = 41
+, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a9a904ef22ae1f3893df93c8a13d723eb">INST_DECRYPT</a> = 42
+, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a4fc0df26f9b3bb34a69208e993824455">INST_JUMP</a> = 61
+, <a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6aa09290448cd285b2a00bb007f6097ccc">INST_ESC</a> = 62
+, <br />
+&#160;&#160;<a class="el" href="classev_1_1EVCommand.html#a28aa8e13bbd96edf9a65696a7fc4afd6a897aef70dc66aa48efdaeefb51d10f0d">INST_CHANGE_CODEC</a> = 63
 <br />
  }</td></tr>
 <tr class="separator:a28aa8e13bbd96edf9a65696a7fc4afd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,9 +128,10 @@ Public Types</h2></td></tr>
 &#160;&#160;<a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a2c550deedb55e15c9e615af84394ec20">COMMAND_TRY_COVER_RELOAD</a> = 11
 , <a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a3acdae418068e2db3cd688cfc272fe34">COMMAND_TRY_UNSAVE_EXIT</a> = 21
 , <a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a4dd361ac1e9a9273b7017165ae711835">COMMAND_NO_MATCH_PATTERN</a> = 31
-, <a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a1e56692f1da9eba02da73146e2c40b0c">COMMAND_OK_EXIT</a> = 41
+, <a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a079fdba1dfee86dc70882ba9b7da0271">COMMAND_SEARCH_OK</a> = 32
 , <br />
-&#160;&#160;<a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a7e4ae3ad02f5a3284bb300901de48496">COMMAND_JUMP</a> = 51
+&#160;&#160;<a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a1e56692f1da9eba02da73146e2c40b0c">COMMAND_OK_EXIT</a> = 41
+, <a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a7e4ae3ad02f5a3284bb300901de48496">COMMAND_JUMP</a> = 51
 , <a class="el" href="classev_1_1EVCommand.html#a2ecfe71745e29ec277f6d27209e88440a370d35cc87f70c7dcc6c95ac49d1dd60">COMMAND_BACK</a> = 52
 <br />
  }</td></tr>
@@ -194,6 +199,8 @@ std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bott
 </td></tr>
 <tr><td class="fieldname"><a id="a2ecfe71745e29ec277f6d27209e88440a4dd361ac1e9a9273b7017165ae711835"></a>COMMAND_NO_MATCH_PATTERN&#160;</td><td class="fielddoc"><p>查找不到匹配结果 </p>
 </td></tr>
+<tr><td class="fieldname"><a id="a2ecfe71745e29ec277f6d27209e88440a079fdba1dfee86dc70882ba9b7da0271"></a>COMMAND_SEARCH_OK&#160;</td><td class="fielddoc"><p>查找到了匹配结果 </p>
+</td></tr>
 <tr><td class="fieldname"><a id="a2ecfe71745e29ec277f6d27209e88440a1e56692f1da9eba02da73146e2c40b0c"></a>COMMAND_OK_EXIT&#160;</td><td class="fielddoc"><p>指令执行成功并且退出程序 </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a2ecfe71745e29ec277f6d27209e88440a7e4ae3ad02f5a3284bb300901de48496"></a>COMMAND_JUMP&#160;</td><td class="fielddoc"><p>跳转 </p>
@@ -230,9 +237,15 @@ std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bott
 </td></tr>
 <tr><td class="fieldname"><a id="a28aa8e13bbd96edf9a65696a7fc4afd6a1e434ce9a5c850730dbaf8d8ff5b83ca"></a>INST_RELOAD_F&#160;</td><td class="fielddoc"><p>强制重新加载 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a28aa8e13bbd96edf9a65696a7fc4afd6a96e71beeba5a734d99ed17223eeb32b1"></a>INST_SEARCH&#160;</td><td class="fielddoc"><p>搜索，需要参数指定搜索内容 </p>
+<tr><td class="fieldname"><a id="a28aa8e13bbd96edf9a65696a7fc4afd6a96e71beeba5a734d99ed17223eeb32b1"></a>INST_SEARCH&#160;</td><td class="fielddoc"><p>搜索，需要参数指定搜索内容，大小写敏感 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a28aa8e13bbd96edf9a65696a7fc4afd6a0d6873060ec7eaa54a2f9d0a2cee0285"></a>INST_SEARCH_CASE_IS&#160;</td><td class="fielddoc"><p>搜索，大小写不敏感 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a28aa8e13bbd96edf9a65696a7fc4afd6aebba28addbb43935d493e95f842caa3c"></a>INST_SEARCH_REGEX&#160;</td><td class="fielddoc"><p>搜索，正则表达式 </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a28aa8e13bbd96edf9a65696a7fc4afd6af300b83e727b1a80ae6d776148cfa266"></a>INST_SEARCH_REPLACE&#160;</td><td class="fielddoc"><p>搜索并替换，需要参数指定搜索内容和替换内容 //todo 增加参数指定替换范围 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a28aa8e13bbd96edf9a65696a7fc4afd6abe57156ed4bb710adebf1c6f6e0a425a"></a>INST_SEARCH_REPLACE_CASE_IS&#160;</td><td class="fielddoc"><p>大小写不敏感的搜索并替换 </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a28aa8e13bbd96edf9a65696a7fc4afd6a70f1d80264afb52c210efcfdd63752bf"></a>INST_ENCRYPT&#160;</td><td class="fielddoc"><p>对称加密 </p>
 </td></tr>

@@ -55,6 +55,7 @@ var menudata={children:[
 {text:"c",url:"functions_eval.html#index_c"},
 {text:"e",url:"functions_eval.html#index_e"},
 {text:"i",url:"functions_eval.html#index_i"},
-{text:"n",url:"functions_eval.html#index_n"}]}]}]},
+{text:"n",url:"functions_eval.html#index_n"},
+{text:"w",url:"functions_eval.html#index_w"}]}]}]},
 {text:"Files",url:"files.html",children:[
 {text:"File List",url:"files.html"}]}]}

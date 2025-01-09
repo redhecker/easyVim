@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['easyvim_240',['easyVim',['../index.html',1,'']]]
+  ['easyvim_258',['easyVim',['../index.html',1,'']]]
 ];
