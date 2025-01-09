@@ -27,7 +27,8 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
     config["/"] = EVCommand::instType::INST_SEARCH;
     config["c/"] = EVCommand::instType::INST_SEARCH_CASE_IS;
     config["C/"] = EVCommand::instType::INST_SEARCH;
-    config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
+    config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
+    config["S/"] = EVCommand::instType::INST_SEARCH_REPLACE;
     config["c/s/"] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
     config["C/s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
     config["enc"] = EVCommand::instType::INST_ENCRYPT;
