@@ -258,6 +258,24 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
         case ev::EVCommand::COMMAND_BACK:
             window_->setStatus(ev::window::WindowStatus::NORMAL);
             break;
+        case ev::EVCommand::COMMAND_NOT_EXIST:
+            window_->setStatus(ev::window::WindowStatus::WARNING_COMMAND_NOT_EXIST);
+            break;
+        case ev::EVCommand::COMMAND_PARAM_ERROR:
+            window_->setStatus(ev::window::WindowStatus::WARNING_COMMAND_PARAM_ERROR);
+            break;
+        case ev::EVCommand::COMMAND_FAIL:
+            window_->setStatus(ev::window::WindowStatus::WARNING_COMMAND_FAIL);
+            break;
+        case ev::EVCommand::COMMAND_NO_MATCH_PATTERN:
+            window_->setStatus(ev::window::WindowStatus::WARNING_NO_MATCH_PATTERN);
+            break;
+        case ev::EVCommand::COMMAND_TRY_COVER_RELOAD:
+            window_->setStatus(ev::window::WindowStatus::WARNING_TRY_COVER_RELOAD);
+            break;
+        case ev::EVCommand::COMMAND_TRY_UNSAVE_QUIT:
+            window_->setStatus(ev::window::WindowStatus::WARNING_TRY_UNSAVE_QUIT);
+            break;
         default:
             break;
     }
@@ -265,6 +283,15 @@ bool command(ev::window* window_, ev::EVFile* file_, ev::EVCommand* comm_){
     return res;
 }
 
+void warning(ev::window* window_) {
+    int ch = window_->getInput();
+    switch (ch)
+    {
+    default:
+        window_->setStatus(ev::window::WindowStatus::COMMAND);
+        break;
+    }
+}
 
 int main(int argc, char** argv){
     ev::Parser parser;
@@ -334,6 +361,24 @@ int main(int argc, char** argv){
             break;
         case ev::window::WindowStatus::COMMAND:
             exit = command(&window, &file, &commandCfg);
+            break;
+        case ev::window::WindowStatus::WARNING_COMMAND_FAIL:
+            warning(&window);
+            break;
+        case ev::window::WindowStatus::WARNING_COMMAND_NOT_EXIST:
+            warning(&window);
+            break;
+        case ev::window::WindowStatus::WARNING_COMMAND_PARAM_ERROR:
+            warning(&window);
+            break;
+        case ev::window::WindowStatus::WARNING_NO_MATCH_PATTERN:
+            warning(&window);
+            break;
+        case ev::window::WindowStatus::WARNING_TRY_COVER_RELOAD:
+            warning(&window);
+            break;
+        case ev::window::WindowStatus::WARNING_TRY_UNSAVE_QUIT:
+            warning(&window);
             break;
         default:
             break;

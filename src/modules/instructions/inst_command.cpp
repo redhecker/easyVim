@@ -27,8 +27,7 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
     config["/"] = EVCommand::instType::INST_SEARCH;
     config["c/"] = EVCommand::instType::INST_SEARCH_CASE_IS;
     config["C/"] = EVCommand::instType::INST_SEARCH;
-    config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
-    config["S/"] = EVCommand::instType::INST_SEARCH_REPLACE;
+    config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
     config["c/s/"] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
     config["C/s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
     config["enc"] = EVCommand::instType::INST_ENCRYPT;
@@ -166,7 +165,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         }
 
         if (file_->hasChange){
-            res = COMMAND_TRY_UNSAVE_EXIT;
+            res = COMMAND_TRY_UNSAVE_QUIT;
             break;
         }
         if (file_->quitFile() != EVFile::EVFileStatus::EVFILE_OK){

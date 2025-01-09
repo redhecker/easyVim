@@ -52,7 +52,7 @@ public:
 
         COMMAND_TRY_COVER_RELOAD  = 11, ///< 文件中有更改，试图进行覆盖式的重新加载
 
-        COMMAND_TRY_UNSAVE_EXIT   = 21, ///< 试图不保存文件退出
+        COMMAND_TRY_UNSAVE_QUIT   = 21, ///< 试图不保存文件退出
         
         COMMAND_NO_MATCH_PATTERN  = 31, ///< 查找不到匹配结果
         COMMAND_SEARCH_OK         = 32, ///< 查找到了匹配结果

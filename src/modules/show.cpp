@@ -29,6 +29,7 @@ void window::init() {
     }
     start_color();
     init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_WHITE, COLOR_RED);
     updateStatus();
     refresh();
     curRow = 0;
@@ -50,6 +51,31 @@ void window::updateStatus(){
         printw("--COVER--");
     } else if (status == COMMAND) {
         printw(":");
+    }
+    else if (status == WARNING_COMMAND_FAIL) {
+        attron(A_BOLD | COLOR_PAIR(2));
+        printw("WARNING: COMMAND FAIL!");
+        attroff(A_BOLD | COLOR_PAIR(2));
+    } else if (status == WARNING_COMMAND_NOT_EXIST) {
+        attron(A_BOLD | COLOR_PAIR(2));
+        printw("WARNING: COMMAND NOT EXIST!");
+        attron(A_BOLD | COLOR_PAIR(2));
+    } else if (status == WARNING_COMMAND_PARAM_ERROR) {
+        attron(A_BOLD | COLOR_PAIR(2));
+        printw("WARNING: COMMAND PARAMETER ERROR!");
+        attron(A_BOLD | COLOR_PAIR(2));
+    } else if (status == WARNING_NO_MATCH_PATTERN) {
+        attron(A_BOLD | COLOR_PAIR(2));
+        printw("NO MATCH PATTERN!");
+        attron(A_BOLD | COLOR_PAIR(2));
+    } else if (status == WARNING_TRY_COVER_RELOAD) {
+        attron(A_BOLD | COLOR_PAIR(2));
+        printw("WARNING: This command will cover your change (add ! to override)");
+        attron(A_BOLD | COLOR_PAIR(2));
+    } else if (status == WARNING_TRY_UNSAVE_QUIT) {
+        attron(A_BOLD | COLOR_PAIR(2));
+        printw("WARNING: No write since last change (add ! to override)");
+        attron(A_BOLD | COLOR_PAIR(2));
     }
     attroff(COLOR_PAIR(1));
     move(row, col);
