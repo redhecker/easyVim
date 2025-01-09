@@ -26,7 +26,11 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
 
     config["/"] = EVCommand::instType::INST_SEARCH;
     config["c/"] = EVCommand::instType::INST_SEARCH_CASE_IS;
-    config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
+    config["C/"] = EVCommand::instType::INST_SEARCH;
+    config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
+    config["S/"] = EVCommand::instType::INST_SEARCH_REPLACE;
+    config["c/s/"] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
+    config["C/s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
     config["enc"] = EVCommand::instType::INST_ENCRYPT;
     config["dec"] = EVCommand::instType::INST_DECRYPT;
 
@@ -52,12 +56,14 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
             config[value] = EVCommand::instType::INST_QUIT;
         } else if (key == "quitf"){
             config[value] = EVCommand::instType::INST_QUIT_F;
-        } else if (key == "search"){
+        } else if (key == "search" || "search case sensitive"){
             config[value] = EVCommand::instType::INST_SEARCH;
         } else if (key == "search case insensitive") {
             config[value] = EVCommand::instType::INST_SEARCH_CASE_IS;
-        } else if (key == "search and replace"){
+        } else if (key == "search and replace || search and replace sensitive"){
             config[value] = EVCommand::instType::INST_SEARCH_REPLACE;
+        } else if (key == "search and replace case insensitive"){
+            config[value] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
         } else if (key == "encrypt"){
             config[value] = EVCommand::instType::INST_ENCRYPT;
         } else if (key == "decrypt"){
@@ -229,6 +235,24 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         }
         
         auto fileStatus = file_->searchReplace(params[1], params[2], true);
+        if (fileStatus == EVFile::EVFILE_NO_MATCH_PATTERN){
+            res = COMMAND_NO_MATCH_PATTERN;        
+        }
+        else if (fileStatus == EVFile::EVFILE_REPLACE_FAIL){
+            res = COMMAND_FAIL;
+        }
+        else{
+            res = COMMAND_OK;
+        }
+        break;
+    }
+    case EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS:{
+        if (params.size() != 3){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        
+        auto fileStatus = file_->searchReplace(params[1], params[2], false);
         if (fileStatus == EVFile::EVFILE_NO_MATCH_PATTERN){
             res = COMMAND_NO_MATCH_PATTERN;        
         }

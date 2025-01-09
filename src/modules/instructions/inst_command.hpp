@@ -33,6 +33,7 @@ public:
         INST_SEARCH_CASE_IS = 34, ///< 搜索，大小写不敏感
         INST_SEARCH_REGEX   = 35, ///< 搜索，正则表达式
         INST_SEARCH_REPLACE = 36, ///< 搜索并替换，需要参数指定搜索内容和替换内容 //todo 增加参数指定替换范围
+        INST_SEARCH_REPLACE_CASE_IS = 37, ///< 大小写不敏感的搜索并替换
 
         INST_ENCRYPT        = 41, ///< 对称加密
         INST_DECRYPT        = 42, ///< 对称解密
