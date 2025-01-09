@@ -6,6 +6,7 @@
  */
 
 #include "inst_command.hpp"
+#include "../encrypt/encrypt.hpp"
 #include <algorithm>
 
 namespace ev{
@@ -24,7 +25,12 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
     config["reload!"] = EVCommand::instType::INST_RELOAD_F;
 
     config["/"] = EVCommand::instType::INST_SEARCH;
-    config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
+    config["c/"] = EVCommand::instType::INST_SEARCH_CASE_IS;
+    config["C/"] = EVCommand::instType::INST_SEARCH;
+    config["s/"] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
+    config["S/"] = EVCommand::instType::INST_SEARCH_REPLACE;
+    config["c/s/"] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
+    config["C/s/"] = EVCommand::instType::INST_SEARCH_REPLACE;
     config["enc"] = EVCommand::instType::INST_ENCRYPT;
     config["dec"] = EVCommand::instType::INST_DECRYPT;
 
@@ -50,10 +56,14 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
             config[value] = EVCommand::instType::INST_QUIT;
         } else if (key == "quitf"){
             config[value] = EVCommand::instType::INST_QUIT_F;
-        } else if (key == "search"){
+        } else if (key == "search" || "search case sensitive"){
             config[value] = EVCommand::instType::INST_SEARCH;
-        } else if (key == "search and replace"){
+        } else if (key == "search case insensitive") {
+            config[value] = EVCommand::instType::INST_SEARCH_CASE_IS;
+        } else if (key == "search and replace || search and replace sensitive"){
             config[value] = EVCommand::instType::INST_SEARCH_REPLACE;
+        } else if (key == "search and replace case insensitive"){
+            config[value] = EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS;
         } else if (key == "encrypt"){
             config[value] = EVCommand::instType::INST_ENCRYPT;
         } else if (key == "decrypt"){
@@ -64,6 +74,10 @@ EVFile::EVFileStatus EVCommand::loadConfig(){
             config[value] = EVCommand::instType::INST_JUMP;
         } else if (key == "esc"){
             config[value] = EVCommand::instType::INST_ESC;
+        } else if (key == "encrypt"){
+            config[value] = EVCommand::instType::INST_ENCRYPT;
+        } else if (key == "decrypt"){
+            config[value] = EVCommand::instType::INST_DECRYPT;
         } else {
             continue;
         }
@@ -200,7 +214,17 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
             break;
         }
 
-        res = (file_->searchInFile(params[1]) == EVFile::EVFILE_NO_MATCH_PATTERN) ? 
+        res = (file_->searchInFile(params[1], true) == EVFile::EVFILE_NO_MATCH_PATTERN) ? 
+            COMMAND_NO_MATCH_PATTERN : COMMAND_OK;
+        break;
+    }
+    case EVCommand::instType::INST_SEARCH_CASE_IS:{
+        if (params.size() != 2){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        res = (file_->searchInFile(params[1], false) == EVFile::EVFILE_NO_MATCH_PATTERN) ? 
             COMMAND_NO_MATCH_PATTERN : COMMAND_OK;
         break;
     }
@@ -210,7 +234,25 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
             break;
         }
         
-        auto fileStatus = file_->searchReplace(params[1], params[2]);
+        auto fileStatus = file_->searchReplace(params[1], params[2], true);
+        if (fileStatus == EVFile::EVFILE_NO_MATCH_PATTERN){
+            res = COMMAND_NO_MATCH_PATTERN;        
+        }
+        else if (fileStatus == EVFile::EVFILE_REPLACE_FAIL){
+            res = COMMAND_FAIL;
+        }
+        else{
+            res = COMMAND_OK;
+        }
+        break;
+    }
+    case EVCommand::instType::INST_SEARCH_REPLACE_CASE_IS:{
+        if (params.size() != 3){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        
+        auto fileStatus = file_->searchReplace(params[1], params[2], false);
         if (fileStatus == EVFile::EVFILE_NO_MATCH_PATTERN){
             res = COMMAND_NO_MATCH_PATTERN;        
         }
@@ -241,15 +283,70 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         res = COMMAND_JUMP;
         break;
     }
-    case EVCommand::instType::INST_ESC:
+    case EVCommand::instType::INST_ESC:{
         res = COMMAND_BACK;
+        // 需要清空搜索结果，防止在NORMAL下刷新
+        file_->searchPosition.clear();
         break;
-    case EVCommand::instType::INST_ENCRYPT:
-        // todo 加密
+    }
+    case EVCommand::instType::INST_ENCRYPT:{
+        if (params.size() != 2 && params.size() != 3){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        std::string key;
+        std::vector<std::string> enc;
+        if (params.size() == 2) {
+            key = params[1];
+            if (!ev::encrypt(&(file_->fileContent), &enc, key, EV_ENCRYPT_TYPE::EV_ENCRYPT_AES_BEGIN)){
+                res = COMMAND_FAIL;
+                break;
+            }
+        } else if (params[1] == "-f") {
+            key = params[2];
+            if (!ev::encrypt(&(file_->fileContent), &enc, key, EV_ENCRYPT_TYPE::EV_ENCRYPT_AES_NBEGIN)){
+                res = COMMAND_FAIL;
+                break;
+            }
+        } else {
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        file_->fileContent = enc;
+        file_->hasChange = true;
+        res = COMMAND_OK;
         break;
-    case EVCommand::instType::INST_DECRYPT:
-        // todo 解密
+    }
+    case EVCommand::instType::INST_DECRYPT:{
+        if (params.size() != 2 && params.size() != 3){
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+        std::string key;
+        std::vector<std::string> dec;
+        if (params.size() == 2) {
+            key = params[1];
+            if (!ev::decrypt(&(file_->fileContent), &dec, key, EV_DECRYPT_TYPE::EV_DECRYPT_AES_BEGIN)){
+                res = COMMAND_FAIL;
+                break;
+            }
+        } else if (params[1] == "-f") {
+            key = params[2];
+            if (!ev::decrypt(&(file_->fileContent), &dec, key, EV_DECRYPT_TYPE::EV_DECRYPT_AES_NBEGIN)){
+                res = COMMAND_FAIL;
+                break;
+            }
+        } else {
+            res = COMMAND_PARAM_ERROR;
+            break;
+        }
+
+        file_->fileContent = dec;
+        file_->hasChange = true;
+        res = COMMAND_OK;
         break;
+    }
     case EVCommand::instType::INST_CHANGE_CODEC:
         // todo 更改编码
         break;
