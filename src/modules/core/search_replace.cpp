@@ -168,7 +168,8 @@ std::vector<std::pair<size_t, size_t>> EVFile::search_first_case_ins(const std::
         for (size_t col = 0; col + len <= line.size(); col++) {
             if (content_lower == line_lower.substr(col, len)) {
                 results.push_back(std::pair<size_t, size_t>(row, col));
-                return results;  // 返回找到的第一个匹配位置
+                col += len - 1;
+                continue;
             }
         }
     }
