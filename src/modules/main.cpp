@@ -1,17 +1,18 @@
 /**@mainpage  easyVim
 * <table>
-* <tr><th>Author   <td>Zhu Chao      redhecker@github
-* <tr><th>Author   <td>Zhong Yong    OptimistiCompound@github
-* <tr><th>Author   <td>Liu Haoran    Defect-sts@github
+* <tr><th>Author   <td>Zhu Chao      <td>redhecker@github
+* <tr><th>Author   <td>Zhong Yong    <td>OptimistiCompound@github
+* <tr><th>Author   <td>Liu Haoran    <td>Defect-sts@github
 * </table>
 * @section   项目描述
-* easyVim 是一款类似vim的文本编辑器。
-*
-* @section   项目功能描述
-* easyVim功能描述。
+* easyVim easyVim 作为一款精造的简化版 vim 文本编辑器，
+* 致力于为用户提供便捷、高效的文本编辑体验，
+* 其支持丰富多样的文本操作功能，以满足不同场景下的编辑需求。
 * 
 * @section   用法描述 
-* 可以这样那样用。
+* 使用./easyVim -h可以查看支持的所有参数及其简单介绍，
+* 或者到https://github.com/redhecker/easyVim/wiki/%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C-%E2%80%90-users'-manual
+* 查看用户手册。
 * 
 * @copyright   Copyright (c) 2024
 * @todo support utf-8 codec
