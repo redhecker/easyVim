@@ -371,20 +371,10 @@ int main(int argc, char** argv){
             exit = command(&window, &file, &commandCfg);
             break;
         case ev::window::WindowStatus::WARNING_COMMAND_FAIL:
-            warning(&window);
-            break;
         case ev::window::WindowStatus::WARNING_COMMAND_NOT_EXIST:
-            warning(&window);
-            break;
         case ev::window::WindowStatus::WARNING_COMMAND_PARAM_ERROR:
-            warning(&window);
-            break;
         case ev::window::WindowStatus::WARNING_NO_MATCH_PATTERN:
-            warning(&window);
-            break;
         case ev::window::WindowStatus::WARNING_TRY_COVER_RELOAD:
-            warning(&window);
-            break;
         case ev::window::WindowStatus::WARNING_TRY_UNSAVE_QUIT:
             warning(&window);
             break;
