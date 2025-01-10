@@ -279,7 +279,7 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
         if (num == -1) {
             num = file_->fileContent.size() - 1;
         }
-        if (num < 0 || (size_t)num >= file_->fileContent.size()){
+        if (num < 0 || (size_t)num > file_->fileContent.size()){
             res = COMMAND_PARAM_ERROR;
             break;
         }
