@@ -188,17 +188,24 @@ bool insert(ev::window* window_, ev::EVFile* file_){
             case EV_DOWN:
                 window_->moveDown();
                 break;
-            case EV_Backspace:
+            case EV_Backspace:{
                 window_->getCuryx(x, y);
+                size_t col = 0;
+                if (y > 0)
+                    col = file_->fileContent[y-1].length();
                 file_->deleteChar(y, x, true);
                 window_->refreshCur(false);
                 if (window_->getCurCol() > 0){
                     window_->moveLeft();
                 } else if (window_->getCurRow() > 0){
                     window_->moveUp();
-                    window_->moveEnd();
+                    window_->moveHead();
+                    for (size_t i=0; i<col; i++){
+                        window_->moveRight();
+                    }
                 }
                 break;
+            }
             case EV_Delete:
                 // 删除当前字符
                 window_->getCuryx(x, y);

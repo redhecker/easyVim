@@ -133,13 +133,13 @@ EVFile::EVFileStatus EVFile::deleteChar(int row, int col, bool isFront) {
     }
 
     if (isFront) {
-        if (col > 0) {  
+        if (col > 0) {
             fileContent[row].erase(fileContent[row].begin() + col - 1);  
         } else {
             // 这个目前的问题在于对光标的掌控不足
             if (row > 0) {
-                // size_t lastCol = fileContent[row - 1].size();  
-                fileContent[row - 1].push_back(fileContent[row][0]); 
+                // size_t lastCol = fileContent[row - 1].size();
+                fileContent[row - 1] += fileContent[row];
                 fileContent.erase(fileContent.begin() + row); 
             }
         }  
