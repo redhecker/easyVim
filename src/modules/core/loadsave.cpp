@@ -132,7 +132,7 @@ EVFile::EVFileStatus EVFile::deleteChar(int row, int col, bool isFront) {
         return EVFileStatus::EVFILE_OUT_OF_BOUND;  
     }
 
-    if (isFront) {  
+    if (isFront) {
         if (col > 0) {  
             fileContent[row].erase(fileContent[row].begin() + col - 1);  
         } else {

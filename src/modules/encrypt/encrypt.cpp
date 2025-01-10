@@ -44,6 +44,12 @@ namespace ev
             aes_decrypt(input, output, key);
         } 
         else if (evType == EV_DECRYPT_AES_NBEGIN) {
+            // 保证对方如果是用正常的加密方式加密的，那么这里也能解密（只要密码正确就是正确解密）
+            std::string key_md5 = md5(key);
+            std::string real_md5 = input->front();
+            if (key_md5 == real_md5){
+                input->erase(input->begin());
+            }
             aes_decrypt(input, output, key);
         }
         else {
