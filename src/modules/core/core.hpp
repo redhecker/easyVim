@@ -82,10 +82,10 @@ public:
     EVFileStatus searchInFile(const std::string content, bool caseSensitive); 
 
     /**
-     * @brief 在文件中查找匹配的内容并替换，大小写敏感
+     * @brief 在文件中查找匹配的内容并替换
      * @return evFileStatus 文件状态
      */
-    EVFileStatus searchReplace(const std::string searchContent, const std::string replaceContent, bool caseSensitive); 
+    EVFileStatus searchReplace(const std::string searchContent, const std::string replaceContent, bool caseSensitive = true); 
 
     /**
      * @brief 在文件中查找匹配正则表达式的内容

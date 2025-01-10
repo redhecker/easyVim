@@ -23,8 +23,13 @@ public:
         INSERT  = 1, ///< 插入模式
         COVER   = 2, ///< 覆盖模式
         COMMAND = 3, ///< 命令模式
-        WARNING_TRY_UNSAVE_QUIT = 4, ///< 尝试不保存退出
-        WARNING_PATTERN_NOT_FOUND = 5 ///< 未查找到匹配样式
+
+        WARNING_TRY_UNSAVE_QUIT = 11, ///< 尝试不保存退出
+        WARNING_NO_MATCH_PATTERN = 12, ///< 未查找到匹配样式
+        WARNING_COMMAND_NOT_EXIST = 13, ///< 指令不存在
+        WARNING_COMMAND_PARAM_ERROR = 14, ///< 指令参数错误
+        WARNING_COMMAND_FAIL = 15, ///< 指令执行失败
+        WARNING_TRY_COVER_RELOAD = 16, ///< 尝试覆盖内容
     };
 
     window(EVFile* f) : lineNumber(0), colNumber(0), status(NORMAL), file(f){}
