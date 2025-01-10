@@ -93,6 +93,11 @@ EVCommand::commandStatus EVCommand::execCommand(std::vector<std::string> params,
 
     EVCommand::commandStatus res = commandStatus::COMMAND_FAIL;
 
+    int cnt = config.count(params[0]);
+    if (cnt == 0){
+        return EVCommand::COMMAND_NOT_EXIST;
+    }
+
     switch (config[params[0]]){
     case EVCommand::instType::INST_SAVE:{
         if (params.size() != 1){

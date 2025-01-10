@@ -45,7 +45,7 @@ public:
     };
 
     enum commandStatus {
-        COMMAND_OK          = 0, ///< 指令执行成功
+        COMMAND_OK          = 4, ///< 指令执行成功 // 0 is reserved for unexpected situation
         COMMAND_FAIL        = 1, ///< 指令执行失败
         COMMAND_PARAM_ERROR = 2, ///< 参数错误
         COMMAND_NOT_EXIST   = 3, ///< 指令不存在
