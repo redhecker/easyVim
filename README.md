@@ -300,6 +300,8 @@ All issues and pull-requests are welcome :heart:. We have provided templates, bu
 
 [Users' Manual](https://github.com/redhecker/easyVim/wiki/%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C-%E2%80%90-users'-manual)
 
+[Developments' Manual](https://github.com/redhecker/easyVim/wiki/%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C)
+
 [Recommendation](https://github.com/redhecker/easyVim/wiki/%E6%8E%A8%E8%8D%90%E8%AF%AD)
 
 ## Acknowledgments
